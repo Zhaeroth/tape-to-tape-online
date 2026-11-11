@@ -1,0 +1,126 @@
+# Presentation: which of the game's event listeners run on a friend's PC (Streaming/EventChannel.cs).
+# From a survey of the event buses: every class that subscribes to GameplayEvents, RogueEvents,
+# PowerupEvents or ShopEvents was classed presentation, logic, menu or local by its handlers.
+# Checked offline by hookcheck.py (every class and event) and, in the game, when a PC first plays a host's stream: a
+# [listeners] class missing from the running build is logged as a warning, and the rest of the list still applies.
+#
+# [listeners]  presentation classes: their listeners get the host's events. Every other listener is detached while
+#              client mode is on (so presentation code raising an event locally can't reach game logic) and put back
+#              after. A listener's class is its handler's outermost declaring class (SoundManager for SoundManager+<>c).
+# [local]      events that presentation code raises itself on a friend's PC: not delivered from the stream, or they'd
+#              arrive twice.
+# [menu]       events this PC's own pause menu raises, and what playback does: pause, resume, or leave (playback stops
+#              and puts the match back first; the game's own exit handlers then get the event). Not leaks.
+
+[listeners]
+# Sound and crowd
+SoundManager
+CrowdIncrementalSound
+T2T.Crowd.CrowdEventsListener
+T2T.Crowd.CoachEventListener
+WorldMapMusic
+# Screen effects (CameraController itself is left out: the camera follows the stream's pose)
+CameraShake
+LetterBoxingEffect
+Animations.ScreenTransition
+Animations.GoalAnimation
+PeriodTransitionCover
+# VFX
+Skaters.ForwardVFX
+Skaters.ForwardVFXReplay
+Skaters.CriticalShotVfxController
+Skaters.GrassShotVfxController
+Skaters.SandShotVfxController
+Goaltender.GoaltenderVfxHandler
+Rogue.Powerups.VFX.VfxLoader
+Rogue.Powerups.VFX.VfxPool
+Tape2Tape.PuckTrailManager
+# Lights and arena
+VFX.LightStateListenerLightDimmer
+VFX.LightStateListenerMaterialDimmer
+GoalLight
+Tape2Tape.SpotLightController
+Arena.AdBandGoalDriver
+Rogue.Eliminator.EliminatorAdBandDriver
+HatLauncher
+BenchPlayerSkins
+Arena.IceSetup
+# HUD
+UI.PlayerIndicator
+UI.Scoreboard.ScoreboardCanvasController
+UI.PuckIndicator
+UI.SkaterGroundMarkers
+UI.GoalScorerBanner
+UI.GoalScorerBannerColors
+UI.PeriodPresentation
+UI.TeamPresentation
+UI.StandardGame.OffscreenIndicatorCanvasController
+Tape2Tape.Hockey.UI.SkaterInitUI
+Tape2Tape.Hockey.UI.ActiveSkaterGlobalUI
+Tape2Tape.Hockey.UI.NotificationPusher
+Tape2Tape.Hockey.UI.SceneBackdrop
+Tape2Tape.Hockey.UI.InjuryToast
+Tape2Tape.Hockey.UI.TeamPerksListUI
+ScoreboardTimeRemaining
+Scorebug
+PeriodIndicatorUI
+OffScreenIndicator
+NHL94.AimIndicator
+Tape2Tape.TeamScore
+OnboardingControllerImage
+# Announcements
+RefereeNoGoalSpeech
+State.FaceOffAnnouncement
+State.GolferPreTransformSpeech
+# Inspector UnityEvents (goal, post, bodycheck, board and stick hits, breakaway, reset, puck collision): their targets
+# are scene data, presumably feedback players. Kept on; the leak audit shows if any of them reaches game logic.
+Events.GameplayEventsListener
+#
+# Left out (their listeners stay detached on a friend's PC):
+#   Goaltender.GoaltenderAudioHandler: picks its sound from the goalie's Spine animation; its sound is forwarded instead
+#     (Streaming/Sounds.cs).
+#   ControllerVibration.ControllerVibrationEventHandler: rumble goes to the friend's own pad only, from the host's own
+#     vibration call (Streaming/Rumble.cs).
+#   Animations.SkatingAnimationManager, Tape2Tape.Celebrations: may fight the animation states the snapshots set.
+#   Skaters.HelmetEquipmentInWorld, StickPool, Replay.ReplayPrefabHelper, Tape2Tape.EnvironmentProps.GatoradeBottle:
+#     spawn or move objects locally.
+
+[local]
+GameplayEvents.ScreenTransitionStart
+GameplayEvents.ScreenTransitionEnd
+# The anthem and team presentation (NewNationalAnthem's sequence coroutines) run in every freshly loaded match: a
+# friend's own intro raises these while it waits for the host's stream, which starts at the first faceoff.
+GameplayEvents.GamePresentation
+GameplayEvents.AfterGamePresentation
+# M4: a friend's own copy of a host reward menu (Campaign/Menus, a real view) raises this from its Show, also while a
+# finished campaign match is held on its last frame.
+RogueEvents.RewardMenuShowStarted
+GameplayEvents.BeforeMatchReveal
+# M4: a friend's own campaign transitions while client mode is on, around each match: its world map
+# closing as its copy of the host's match loads, and the world map coming back for the host's next view before the match
+# scene has gone; a fresh match's own intro and skater set-up (as GamePresentation above).
+RogueEvents.WorldMapSubMenuClosed
+RogueEvents.ExitWorldMap
+RogueEvents.WorldMapInstanceLoaded
+RogueEvents.MapReloaded
+GameplayEvents.OnAnthemOver
+GameplayEvents.SkaterInitialized
+# v1: a friend's own copy of the host's lineup menu (Campaign/Menus/LineupViews.cs, a real view; a reward's or a match's
+# lineup opens while client mode is on) raises these from its own start and destroy (LineupMenu.BehaviourStart,
+# BehaviourDestroy), as the host's does. No listener in the game: the only code that names them raises them (the lineup,
+# the benchwarmer lineup and the exchange menu).
+PowerupEvents.OnOpenLineup
+PowerupEvents.OnCloseLineup
+# A friend's followers of the host's forms and frogs (Match/CultistForms, Match/ZapForms, Match/FrogStatuses) call the
+# game's own TransformationCultistAI.TransformInElite and TransformBack, ZapComponent._Transform and Revert, and
+# SkaterStatusEffectsManager.SetFrogged and RemoveFrogged, which raise these (SoundManager.OnTransformation and OnFrogged,
+# ForwardVFX.OnTransformation and OnTransformationBack listen): heard once, as this PC's skater changes.
+RogueEvents.CultistTransformation
+RogueEvents.CultistTransformationBack
+RogueEvents.SkaterFrogged
+RogueEvents.SkaterUnfrogged
+
+[menu]
+GameplayEvents.OnGamePause pause
+GameplayEvents.OnGameUnpause resume
+GameplayEvents.OnGameExit leave

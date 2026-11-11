@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Reads the facts a release check needs from the shipped assemblies and PDBs (metadata only, nothing is loaded or
+       run). The release and the gate judge them in tools/checks/zipcheck.py. Like rowcheck, outside the shared build
+       settings: its own folder holds empty Directory.Build.props and Directory.Packages.props. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RollForward>Major</RollForward>
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+</Project>

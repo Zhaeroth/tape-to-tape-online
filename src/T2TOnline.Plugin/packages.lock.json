@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dependencies": {
+    "net6.0": {
+      "t2tonline.core": {
+        "type": "Project"
+      },
+      "t2tonline.steam": {
+        "type": "Project"
+      }
+    }
+  }
+}

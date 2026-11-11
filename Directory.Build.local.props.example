@@ -1,0 +1,16 @@
+<Project>
+  <!-- Copy this file to Directory.Build.local.props (next to it) and set your own game folder there. That file is
+       ignored by git, so your path stays on your PC.
+
+       The plugin builds against MelonLoader's assemblies and the interop assemblies MelonLoader generates from the
+       game, so T2TGameDir must be a Tape to Tape folder with MelonLoader 0.7.3 installed and the game launched once.
+       In Steam: right-click Tape to Tape > Manage > Browse local files shows the folder.
+
+       The build takes the game folder from, in order: -p:T2TGameDir=... on the command line, the T2T_GAME_DIR
+       environment variable, then this file. The condition below keeps that order; without it this file would win
+       over the environment variable. The scripts in tools/ (the gate and the release package) also find the game
+       through Steam's own records when none of these is set. -->
+  <PropertyGroup>
+    <T2TGameDir Condition="'$(T2TGameDir)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Tape to Tape</T2TGameDir>
+  </PropertyGroup>
+</Project>

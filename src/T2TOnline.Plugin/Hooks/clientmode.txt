@@ -1,0 +1,229 @@
+# Client mode: the game's own gameplay, switched off from outside while a stream drives the match (Client/ClientMode.cs).
+# Generated from the entry-point census (every Unity message, update-module tick and game-mode controller tick the
+# engine calls in the game's code, Oct 29 build: 370 rows) and reviewed by hand.
+# Checked like hooks.txt: at startup against the interop assemblies, offline with hookcheck.py for existence and folding
+# (rows in [disable] and [presentation] are never patched, so folding is fine there).
+# The patches go in the first time a PC needs them (client mode, or a host's match loading on a friend's PC) and stay
+# for the rest of the game session, letting every call through while unused: HarmonyX can't take an IL2CPP patch out
+# again (ClientMode.cs). A host never carries them.
+#
+# [block]    an early-return prefix, which also counts calls for the leak audit
+# [disable]  folded (shares code with other methods, so it must never be patched): the component is disabled instead
+# [audit]    left running; calls are only counted, so the leak audit shows whether it matters (none at the moment)
+# [presentation] reviewed and left running: never patched
+# [saves]    save writes: refused, reporting success (Client/SaveGuard.cs: while client mode is on, from the moment a
+#            host's match starts loading on a friend's PC until its scene unloads, for a friend's whole campaign session,
+#            and after a backup is restored until the game restarts)
+# The census's interface rows (IGameModeController::Update/FixedUpdate, IUpdateable::Update) are covered by their only
+# implementations: GameControllerBase::Update/FixedUpdate(float) and the Shared checkers below.
+# Campaign matches (M4): the census covers every game type, so the Rogue-only per-frame rows (relic,
+# power-up, golfer and cultist AI components) are already held below, and its Rogue-only presentation rows (power-up
+# and status VFX, the relic bar, the rope's ticks) run. Campaign gameplay that isn't per frame (relic and talent
+# controllers, injuries, the golfer boss tiers, the eliminator's goal flow, the campaign end conditions) acts through the
+# event buses, whose logic listeners client mode detaches (D24; all four buses, RogueEvents included). What a campaign
+# match does outside both (launching, the end-of-match pipeline, the Canada curse pick) is blocked on a friend's PC for the
+# whole campaign session, not only in client mode: hooks.txt, "M4 campaign matches". The talent, relic and
+# ability controllers aren't components; their per-frame Update is called by Skaters.Skater and Tape2Tape.Team (held
+# above), and their rolls outside a frame come from bus listeners (detached), e.g. BenchBonusController.OnGameEnd's random
+# talents. Their match-start setup (OnInitialize, AddEffect) runs while the match loads, before client mode, as an
+# exhibition's does: it changes only this PC's copy of the host's run, which is never saved and is replaced by the next
+# checkpoint. A host's match, exhibition or campaign, stays in client mode, held on its last frame, until its scene
+# unloads, when it ends or can't go on here (Streaming/StreamPlayer.Hold): the quit to the main menu
+# (GameControllerBase.Quit: OnGameExit, the UI action map, time scale 1, isGamePlaying, then its QuitToStartScreen task)
+# runs with client mode on, and none of it needs a held method or a detached listener.
+# [disable] components are found on inactive objects too, and on copies made for the stream.
+
+[block]
+# Reviewed: a debug aim target moved by raw pad axes; a Cinemachine blend watcher (the brain is off in client mode);
+# goalie-save particles from collisions (none happen in client mode).
+Aim::Update
+CmBlendFinishedNotifier::Update
+ParticleSave::OnCollisionEnter
+# Missing from the census (generic parent): steers the virtual cameras, whose output client mode discards, and ends the
+# brawl finisher's slow motion by writing the time scale.
+CameraController::FixedUpdate
+CameraController::Update
+# The puck's idle whistle (logic: whistles a puck nobody plays): held so the rest of Puck::LateUpdate, which only places
+# the puck and its indicator, can run.
+Tape2Tape.Puck::WhistlePuckNotMoving
+# The crowd mixer (presentation, it reacts to the mirrored events) eases and pushes the crowd_master and crowd_momentum
+# FMOD parameters every frame from its own state; the host's values are mirrored, and the two fought (1,095 times in
+# a measured 75 s: the crowd went dull for a few seconds until they converged). Only the push is held: its
+# reactions, organ and jingles still run.
+CrowdIncrementalSound::PushBoth
+# From the census:
+AI.AIStates.SoccerLineAIState::FixedUpdate
+AI.AIStrategy::FixedUpdate
+AI.CultistAI::FixedUpdate
+AI.CultistAI::LateUpdate
+AI.GolferOffenseCoordinator::Update
+AnthemMovementSkaters::FixedUpdate
+BlueLine::OnTriggerEnter
+BoardCollision::OnCollisionEnter
+BoardCollision::OnCollisionStay
+DanceFloor::Update
+DefaultNamespace.SteamStats::Update
+DontGoThroughThings::FixedUpdate
+FaceoffWithReferee::Update
+FakePuckComponent::OnCollisionEnter
+FakePuckComponent::Update
+Fighting.Fighter::FixedUpdate
+Fighting.Fighter::Update
+GameStats::Update
+GlassCollision::OnCollisionEnter
+GoalLineTrigger::OnTriggerEnter
+GoalPost::OnCollisionEnter
+GoalReplay::Update
+Goaltender.Goaltender::OnCollisionEnter
+Goaltender.RegisterSavePosition::Update
+GoaltenderCollision::LateUpdate
+GoaltenderCollision::OnCollisionEnter
+HatTrickKnockBall::OnCollisionEnter
+Movements.MovementManager::FixedUpdate
+Movements.MovementManager::Update
+NetPhysics::OnCollisionEnter
+OutOfBound::OnTriggerExit
+OutOfBound::Update
+Paintable::OnCollisionStay
+Plank::OnCollisionEnter
+PlayersManager::Update
+Pools.Stick::FixedUpdate
+Pools.Stick::OnCollisionEnter
+Pools.Stick::OnCollisionStay
+Pools.Stick::OnTriggerEnter
+PuckState::Update
+RedLine::OnTriggerExit
+Rogue.BallAndChainComponent::FixedUpdate
+Rogue.BallHitDetector::OnCollisionEnter
+Rogue.FartComponent::FixedUpdate
+Rogue.FeedComponent::FixedUpdate
+Rogue.GrapplingHook::FixedUpdate
+Rogue.GrapplingHook::OnCollisionEnter
+Rogue.GravityWellObject::FixedUpdate
+Rogue.HookTrigger::FixedUpdate
+Rogue.HookTrigger::OnTriggerEnter
+Rogue.MagnetoObject::FixedUpdate
+Rogue.Powerups.AI.DiarrheaAI::FixedUpdate
+Rogue.Powerups.AI.DiarrheaAI::LateUpdate
+Rogue.Powerups.AI.GoaltenderFartAI::FixedUpdate
+Rogue.Powerups.Components.CurveBallComponent::FixedUpdate
+Rogue.Powerups.Components.SlowBallComponent::FixedUpdate
+Rogue.Powerups.Components.SmoothBoostComponent::FixedUpdate
+Rogue.Powerups.Components.SmoothDashComponent::FixedUpdate
+Rogue.Powerups.Components.TornadoComponent::FixedUpdate
+Rogue.Powerups.Components.YoyoShotComponent::FixedUpdate
+Rogue.Powerups.Components.ZapComponent::Update
+Rogue.PuckRepellentComponent::FixedUpdate
+Rogue.Relics.Components.BodycheckPropelRelicComponent::FixedUpdate
+Rogue.Relics.Components.BreakawayBoostComponent::FixedUpdate
+Rogue.Relics.Components.FartingPuckComponent::FixedUpdate
+Rogue.Relics.Components.FartingPuckComponent::LateUpdate
+Rogue.Relics.Components.GolfFairwayComponent::FixedUpdate
+Rogue.Relics.Components.HotPotatoMonoBehaviour::FixedUpdate
+Rogue.Relics.Components.HotPotatoMonoBehaviour::LateUpdate
+Rogue.Relics.Components.SuperPassPropelComponent::FixedUpdate
+Rogue.Relics.Controllers.OctopusAttackRelicController.SalvoFinisher::Update
+Rogue.RopeHitDetector::FixedUpdate
+Rogue.SlowmoActivePower::Update
+Skaters.HelmetEquipmentInWorld::FixedUpdate
+Skaters.HelmetEquipmentInWorld::OnCollisionEnter
+Skaters.KnockoutBoardCollider::FixedUpdate
+Skaters.Referee::FixedUpdate
+Skaters.Skater::FixedUpdate
+Skaters.Skater::Update
+Skaters.SkaterCollision::OnCollisionEnter
+Skaters.SkaterCollision::OnCollisionExit
+Skaters.SkaterCollision::OnCollisionStay
+State.EndConditions.TimerEnd::Update
+State.GameModeControllers.GameControllerBase::FixedUpdate
+State.GameModeControllers.GameControllerBase::Update
+State.GameModeControllers.NormalMatch.NormalMatchPenaltyShotFlow::FixedUpdate
+State.GameModeControllers.NormalMatch.NormalMatchPenaltyShotFlow::Update
+State.GameModeControllers.Shared.ConditionOverTimeChecker::Update
+State.GameModeControllers.Shared.MovingBackwardsChecker::Update
+State.GameModeControllers.Shared.PenaltyShotRuleCheckers::Update
+State.GameModeControllers.Shared.PenaltyShotSequence::Update
+State.GameStateManager::Update
+State.OnboardingManager::Update
+Tape2Tape.OffsideController::Update
+Tape2Tape.Puck::FixedUpdate
+Tape2Tape.Puck::OnCollisionEnter
+Tape2Tape.Puck::OnTriggerEnter
+Tape2Tape.Team::FixedUpdate
+Tape2Tape.Team::Update
+TimeRemaining::Update
+VerifyGoal::OnTriggerStay
+
+[disable]
+FakePuckTrigger::OnTriggerEnter
+FakePuckTrigger::OnTriggerStay
+Goaltender.GoaltenderStateManager::FixedUpdate
+Goaltender.GoaltenderStateManager::Update
+StickOnBench::OnTriggerEnter
+StickOnBench::OnTriggerStay
+
+[presentation]
+# Census rows reviewed and left running: they only draw, and read values the
+# stream mirrors. Listed so every census row has a class; never patched.
+BishopGames.Utils.RelativePositionToChild::OnUpdate
+# RewiredInputActionsManager::Update (a row that only appeared once the census was fixed): runs the press/hold handlers of the
+# RewiredInputActions registered with it. Their owners are menus and panels (InGameMenu, EndRunStats, Blademaster and
+# run panels; the friend's UI lock covers their input) and one relic, GoalDenierComponent, whose action is enabled only
+# from ShowUI, started by its OnGoalScored game-event listener: client mode detaches that listener on a friend (D24), so
+# the relic's input never turns on there. Input dispatch, left running.
+RewiredInputActionsManager::Update
+CompensateCameraRotation::FixedUpdate
+Skaters.CompensateCameraRotation::FixedUpdate
+FightVerbBindingMigration::Update
+# MenusShow::Update is folded (shares code with MMFollowTarget::StopFollowing and others): never patched. Its body only
+# clears a menu flag.
+RelicBarItem::Update
+ScoreboardTimeRemaining::Update
+ScreenCenterGroundProjection::Update
+ScriptUsageDspCapture::Update
+ScrollRectAutoScrollHerosPower::Update
+ShadowOffsetApplier::LateUpdate
+Tape2Tape.PuckTrailManager::Update
+Tape2Tape.TeamScore::Update
+# Reviewed from their machine code (each only draws): the goalie's equipment graphics and its queued effects
+# (GoaltenderVfxHandler.PlayPending), its pads' rotation, each skater's shadow and stick attachments (the puck drawn on
+# the stick), and the puck's sprite position and indicator. They read only state the stream mirrors (animation,
+# possession). The skater's and the puck's go together: one hides the real puck while the other draws it on the stick.
+Goaltender.Goaltender::LateUpdate
+Goaltender.GoaliePadRotationFix::LateUpdate
+Skaters.Forward::LateUpdate
+Tape2Tape.Puck::LateUpdate
+TutorialMaskController::LateUpdate
+# Reviewed from their machine code on the Nov 1 build: a rope only draws. Update
+# initializes it once its ends are set and runs its roll-up (FinalizeRollUp switches its own object off); FixedUpdate
+# simulates its points (a job over its own arrays); LateUpdate draws them into its LineRenderer. Nothing outside the rope:
+# hits are its RopeHitDetector's (held above). Held, a friend's ropes never moved: the grapple and yoyo lines the game's
+# replay component drives (ReplayForward.DriveGrappleLine, DriveYoyoLine: SetEndpoints, StartRollUp, ReelIn, as in the
+# host's own goal replays) stood straight where they first showed, and the ball and chain's chains made here for the
+# stream (Streaming/ChainMirror) wouldn't draw.
+Rogue.Rope::FixedUpdate
+Rogue.Rope::LateUpdate
+Rogue.Rope::Update
+
+[saves]
+# Save writes are refused while a PC plays a host's match or follows a host's campaign, so it never touches its own saves.
+# Easy Save writes a .tmp file and commits it over the real one in CommitBackup; refusing that (and moves and deletes)
+# leaves the real files untouched. The Steam service calls (cloud sync, run deletion) return true, as if they had worked.
+# A file let through (SaveGuard.AllowWrites) goes with every name Easy Save's save of it passes here: CommitBackup deletes
+# <file>.tmp.bak, copies the file there without overwriting, deletes the file, moves <file>.tmp in and deletes <file>.tmp.bak
+# (Oct 29 build); CreateBackup's copy deletes the old <file>.bac first. A leftover .tmp.bak would fail every later
+# commit of that file (Core.Campaign.EasySaveCopies).
+ES3Internal.ES3IO::CommitBackup
+# ES3Internal.ES3IO::WriteAllBytes is folded with System.IO.File::WriteAllBytes: never patched.
+ES3Internal.ES3IO::MoveFile
+ES3Internal.ES3IO::DeleteFile
+# Easy Save's raw writes, every overload (none folded; no game code outside Easy Save calls them, Oct 29 build). SaveRaw
+# commits through CommitBackup too, but AppendRaw appends to the real file directly, with no .tmp and no commit.
+ES3::SaveRaw
+ES3::AppendRaw
+PlatformService.SteamService::Save
+PlatformService.SteamService::DeleteFile
+PlatformService.SteamService::DeleteRun
+# Easy Save's backup copy (<file>.bac), every overload (none folded): it copies with System.IO.File.Copy, which nothing
+# above catches (ES3IO.CopyFile is folded with File.Copy: never patched). Reached from the run and profile saves (M4).
+ES3::CreateBackup

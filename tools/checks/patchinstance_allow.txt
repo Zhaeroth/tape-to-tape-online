@@ -1,0 +1,10 @@
+# patchinstance.py's allow file: patches that take __instance and are registered through a helper or a loop the check
+# can't read. The check judges each against the target named here (the listing must say the method is an instance
+# method), so an entry is a pointer, not an exemption; the reason says where the registration is.
+# <patch method> | <target type> | <target method>[, <target method>] | <reason>
+RefreshIconsPrefix | RewiredInputSpriteMapper | RefreshIconsMode | PromptPin.Patch fixes the type; the call passes the method's name as a string
+KeyboardNamePrefix | RewiredInputSpriteMapper | GetRawInputNameFromKeyboard | PromptPin.Patch fixes the type; the call passes the method's name as a string
+JoystickNamePrefix | RewiredInputSpriteMapper | GetRawInputNameFromJoystick | PromptPin.Patch fixes the type; the call passes the method's name as a string
+WholeOpPostfix | IntStat | Increment, IncrementCampaign, IncrementPlayNow, IncrementBy, IncrementCampaignBy, IncrementPlayNowBy, TrySetLargerValue, TrySetLargerCampaignValue, TrySetLargerPlayNowValue, TrySetSmallerValue, TrySetSmallerCampaignValue, TrySetSmallerPlayNowValue | ProgressPatches.Install patches each StatMethods name on the type in a loop
+RealOpPostfix | FloatStat | Increment, IncrementCampaign, IncrementPlayNow, IncrementBy, IncrementCampaignBy, IncrementPlayNowBy, TrySetLargerValue, TrySetLargerCampaignValue, TrySetLargerPlayNowValue, TrySetSmallerValue, TrySetSmallerCampaignValue, TrySetSmallerPlayNowValue | ProgressPatches.Install patches each StatMethods name on the type in a loop
+Postfix | ReplayScene | CaptureSnapshot | ReplaySceneTracker.Install looks the method up on its own line, then builds the HarmonyMethod from nameof(Postfix)

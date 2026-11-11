@@ -1,0 +1,45 @@
+# Rebuilds Core and Steam from the tag of a published release and compares them, byte for byte, with the ones in the
+# release's zip (tools/package/Compare-ReleaseBuild.ps1). The plugin compiles against the game's own assemblies and is
+# not rebuilt here. This runs only when a release is published (or by hand with a tag), so nothing runs before a
+# release exists. Every action is pinned by its full commit SHA (the version is in the comment).
+name: reproducible
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: The release tag to check (its public zip must be a release asset)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  DOTNET_NOLOGO: "1"
+  TAG: ${{ github.event.release.tag_name || inputs.tag }}
+
+jobs:
+  rebuild:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.TAG }}
+          persist-credentials: false
+      - uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
+        with:
+          global-json-file: global.json
+          dotnet-version: 6.0.x
+      - name: Download the release's public zip
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release download "$env:TAG" --repo "${{ github.repository }}" --pattern "T2TOnline-*.zip" --dir release
+      - name: Rebuild Core and Steam and compare
+        run: |
+          $zips = @(Get-ChildItem release -Filter "T2TOnline-*.zip" | Where-Object { $_.Name -notlike "*-with-MelonLoader.zip" })
+          if ($zips.Count -ne 1) { throw "Expected one public zip among the release's assets, found $($zips.Count)" }
+          ./tools/package/Compare-ReleaseBuild.ps1 -Zip $zips[0].FullName

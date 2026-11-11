@@ -1,0 +1,127 @@
+# Every prefab part the native screens clone or find by path: the lobby's, and the Online tab's, the Backups screen's and My Settings'
+# (their sections below). Not a hook list: it isn't fed to HookManifest, and a part that's gone turns off only the screen that uses it, as
+# its section says, never the mod's runtime. Checked offline against the game's bundles by tools/checks/uipartscheck.py (after every
+# game patch, and in the gate), and in the game when a source prefab has loaded or before a live menu's parts are used (the log names
+# the part). New rows at the end of their source.
+#
+# Format:
+#   @<menu definition> | <start of its bundle's file name> | <prefab root's name>
+#   <menu definition> | <path under the root; empty for the root> | <script classes it must carry, comma separated>
+# Scripts are named as the game names them; Unity's own classes are named too (Animator, Canvas, Image, CanvasGroup...).
+
+# The shell: GlossaryMenu's frame. Its Animator's clips bind these children by path: keep the names.
+@Glossary | ui-menu_glossary | GlossaryMenu
+Glossary |  | GlossaryMenu, Animator, Canvas, CanvasScaler, GraphicRaycaster
+Glossary | BackgroundContainer/Background | RawImage
+Glossary | ScaledContainer |
+Glossary | ScaledContainer/Header | CanvasGroup
+Glossary | ScaledContainer/Header/Title | TextMeshProUGUI, Localize
+Glossary | ScaledContainer/Tabs | CanvasGroup
+Glossary | ScaledContainer/Tabs/TabsContainer | HorizontalLayoutGroup
+Glossary | ScaledContainer/Content |
+Glossary | ScaledContainer/Content/Scroll View | ScrollRect, GlossaryScrollList, CanvasGroup
+Glossary | ScaledContainer/Content/Scroll View/Viewport/Content | AutoScrollOnNavigableHighlight, NavigableParentSelectClosest
+Glossary | ScaledContainer/Content/Details | Image, CanvasGroup, VerticalLayoutGroup
+Glossary | ScaledContainer/Content/Details/MediaContainer/SpriteView | SpriteMediaView
+Glossary | ScaledContainer/Content/Details/MediaContainer/VideoView | VideoMediaView
+Glossary | ScaledContainer/Content/Details/DescriptionBox/Description | TextMeshProUGUI
+Glossary | ScaledContainer/BottomBar | NavigableParentSelectPrevious, HorizontalLayoutGroup, CanvasGroup
+Glossary | ScaledContainer/BottomBar/Btn-Back/UIInputShortcut_V2 | UIInputShortcut, InputShortcutSFXFMOD
+Glossary | ScaledContainer/BottomBar/Btn-Back/UIInputShortcut_V2/Container/Content/Icon | Image, InputSpriteUI
+Glossary | ScaledContainer/BottomBar/Btn-Back/Label | TextMeshProUGUI, Localize
+Glossary | ScaledContainer/BottomBar/InputShortcutWithLabel/UIInputShortcut_V2 | UIInputShortcut, InputShortcutSFXFMOD
+Glossary | ScaledContainer/BottomBar/InputShortcutWithLabel/UIInputShortcut_V2/Container/Content/Icon | Image, InputSpriteUI
+Glossary | ScaledContainer/BottomBar/InputShortcutWithLabel/Label | TextMeshProUGUI, Localize
+
+# A button with a glyph (the same tree as ui-menu_ingame's AnimatedButtonWithInput, which no menu definition reaches).
+@GameSettings | ui-menu_game_settings | _GameSettingsMenu
+GameSettings | ScaledContainer/BottomButtons/Button_Back | AnimatedButton, ButtonInputShortcut, NavigableSFXFMOD, Animator
+GameSettings | ScaledContainer/BottomButtons/Button_Back/Container/Content/Text | TextMeshProUGUI, Localize
+GameSettings | ScaledContainer/BottomButtons/Button_Back/Container/Content/Icon | Image, InputSpriteUI
+
+# The screens' widgets. A row: the Glossary's list's cell prefab, its own root in the same bundle (reached through GlossaryScrollList.cellPrefab).
+@GlossaryRow | ui-menu_glossary | GlossaryRow
+GlossaryRow |  | AnimatedButton, Animator, NavigableSFXFMOD
+GlossaryRow | Container/Background | Image
+GlossaryRow | Container/MainText/Title | TextMeshProUGUI
+
+# A selector with its label, and the button everything else is made from.
+GameSettings | ScaledContainer/Content/Items/GameSetting | VerticalLayoutGroup
+GameSettings | ScaledContainer/Content/Items/GameSetting/Title | TextMeshProUGUI, Localize
+GameSettings | ScaledContainer/Content/Items/GameSetting/CycleList | CycleList, Animator, NavigableSFXFMOD
+GameSettings | ScaledContainer/Content/Items/GameSetting/CycleList/ArrowLeft | UnselectableAnimatedButton
+GameSettings | ScaledContainer/Content/Items/GameSetting/CycleList/ArrowRight | UnselectableAnimatedButton
+GameSettings | ScaledContainer/Content/Items/ConfirmButton/Button_Confirm | AnimatedButton, ButtonInputShortcut, NavigableSFXFMOD, Animator
+GameSettings | ScaledContainer/Content/Items/ConfirmButton/Button_Confirm/Container/Background/Mask/Highlight-Line | RawImage
+GameSettings | ScaledContainer/Content/Items/ConfirmButton/Button_Confirm/Container/Content/Text | TextMeshProUGUI, Localize
+# A seat's panel and outline: renamed and recoloured for its selected look (the Settings tabs' contour and wash), so its animator's blue never binds.
+GameSettings | ScaledContainer/Content/Items/ConfirmButton/Button_Confirm/Container/Background | Image
+GameSettings | ScaledContainer/Content/Items/ConfirmButton/Button_Confirm/Container/Background/Outline | Image
+
+# The controller screen's parts: the lightning, the ready banner, the Start frame. Its player prefab (m_PlayerPrefab) gives the number box and the device icons.
+@ControllerAssignment | ui-menu_controller_assignment | _ControllerAssignmentMenu
+ControllerAssignment |  | ControllerAssignmentMenu
+ControllerAssignment | BackgroundArena | RawImage
+ControllerAssignment | Background | RawImage
+ControllerAssignment | ScaledContainer/Content/Lightning | CanvasGroup
+ControllerAssignment | ScaledContainer/Content/Lightning/LightningMain | Image
+ControllerAssignment | ScaledContainer/Content/Lightning/Lightning_Left | Image
+ControllerAssignment | ScaledContainer/Content/Lightning/Lightning_Right | Image
+ControllerAssignment | ScaledContainer/Content/Team_Left/Team Container/ReadyBanner | LayoutElement
+ControllerAssignment | ScaledContainer/Content/Team_Left/Team Container/ReadyBanner/txt-read | TextMeshProUGUI, Localize
+ControllerAssignment | ScaledContainer/Content/BottomInputsPlayNow/StartContainer | LayoutElement
+ControllerAssignment | ScaledContainer/Content/BottomInputsPlayNow/StartContainer/Frame | Image
+ControllerAssignment | ScaledContainer/Content/BottomInputsPlayNow/StartContainer/StartButton |
+ControllerAssignment | ScaledContainer/Content/BottomInputsPlayNow/StartContainer/StartButtonOff |
+@ControllerAssignmentPlayer | ui-menu_controller_assignment | ControllerAssignmentPlayer
+ControllerAssignmentPlayer | HorizontalyMovedContainer/PlayerIDContainer/PlayerIDBox | Image
+ControllerAssignmentPlayer | HorizontalyMovedContainer/GamepadRoot/FillColor | Image
+ControllerAssignmentPlayer | HorizontalyMovedContainer/KeyboardRoot/FillColor | Image
+
+# The game's Settings menu, for its Online tab (NativeUi/SettingsTab.cs, D139): checked against each live instance before its graft (a part
+# that's gone leaves the menu the game's own). The tab, the panel and two rows are cloned from the instance's own; the toggle with two lines,
+# the choice row and Credits' button row make the other rows.
+@Settings | ui-menu_settings | SettingsMenu
+Settings |  | SettingsMenu
+Settings | ScaledContainer/Canvas/Tabs | UnselectableToggleGroup, FontSizeMatcher, HorizontalLayoutGroup
+Settings | ScaledContainer/Canvas/Tabs/Toggle_System | UnselectableAnimatedButton, UnselectableToggle, UnselectableButtonSFXFMOD, Animator
+Settings | ScaledContainer/Canvas/Tabs/Toggle_System/Container/Background/Text (TMP) | TextMeshProUGUI, Localize
+Settings | ScaledContainer/Canvas/Tabs/Toggle_Stats | UnselectableToggle
+Settings | ScaledContainer/Canvas/MainContent/Tooltip_DeactivateWhenEmpty | StaticTooltipOnHighlight
+Settings | ScaledContainer/Canvas/MainContent/Options/SettingsContainer/GameplayMenu | GameplaySettingsUI, CanvasGroup, Animator, FontSizeMatcher
+Settings | ScaledContainer/Canvas/MainContent/Options/SettingsContainer/GameplayMenu/Scroll View/Viewport/Container | NavigableParentSelectPrevious, VerticalLayoutGroup
+Settings | ScaledContainer/Canvas/MainContent/Options/SettingsContainer/GameplayMenu/Scroll View/Viewport/Container/Toggle_SkipReplay | AnimatedButton, Toggle, T2TTooltipDefinition, NavigableSFXFMOD, Animator
+Settings | ScaledContainer/Canvas/MainContent/Options/SettingsContainer/GameplayMenu/Scroll View/Viewport/Container/Toggle_SkipReplay/Text/Line1 | TextMeshProUGUI, Localize
+Settings | ScaledContainer/Canvas/MainContent/Options/SettingsContainer/GameplayMenu/Scroll View/Viewport/Container/Toggle_StickShooting | AnimatedButton, Toggle, T2TTooltipDefinition
+Settings | ScaledContainer/Canvas/MainContent/Options/SettingsContainer/GameplayMenu/Scroll View/Viewport/Container/Toggle_StickShooting/Text/Line1 | TextMeshProUGUI, Localize
+Settings | ScaledContainer/Canvas/MainContent/Options/SettingsContainer/GameplayMenu/Scroll View/Viewport/Container/Toggle_StickShooting/Text/Line2 | TextMeshProUGUI, Localize
+Settings | ScaledContainer/Canvas/MainContent/Options/SettingsContainer/GameplayMenu/Scroll View/Viewport/Container/PlayerHUD_CycleList | CycleList, T2TTooltipDefinition, Animator
+Settings | ScaledContainer/Canvas/MainContent/Options/SettingsContainer/GameplayMenu/Scroll View/Viewport/Container/PlayerHUD_CycleList/Title | TextMeshProUGUI, Localize
+Settings | ScaledContainer/Canvas/MainContent/Options/SettingsContainer/SystemMenu/Container/ButtonWithTitle_DeleteEverything | Animator
+Settings | ScaledContainer/Canvas/MainContent/Options/SettingsContainer/SystemMenu/Container/ButtonWithTitle_DeleteEverything/Title | TextMeshProUGUI, Localize
+Settings | ScaledContainer/Canvas/MainContent/Options/SettingsContainer/SystemMenu/Container/ButtonWithTitle_DeleteEverything/Button | AnimatedButton, NavigableSFXFMOD, CanvasGroup, MainMenuOnlyButton
+Settings | ScaledContainer/Canvas/MainContent/Options/SettingsContainer/SystemMenu/Container/ButtonWithTitle_DeleteEverything/Button/Text (TMP) | TextMeshProUGUI, Localize
+Settings | ScaledContainer/Canvas/MainContent/Options/SettingsContainer/SystemMenu/Container/ButtonWithTitle_DeleteEverything/Button/icon-warning | Image
+Settings | ScaledContainer/Canvas/MainContent/Options/SettingsContainer/SystemMenu/Container/ButtonWithTitle_Credits | Animator
+Settings | ScaledContainer/Canvas/MainContent/Options/SettingsContainer/SystemMenu/Container/ButtonWithTitle_Credits/Title | TextMeshProUGUI, Localize
+Settings | ScaledContainer/Canvas/MainContent/Options/SettingsContainer/SystemMenu/Container/ButtonWithTitle_Credits/Button | AnimatedButton, NavigableSFXFMOD
+Settings | ScaledContainer/Canvas/MainContent/Options/SettingsContainer/SystemMenu/Container/ButtonWithTitle_Credits/Button/Text (TMP) | TextMeshProUGUI, Localize
+Settings | ScaledContainer/Canvas/MainContent/Options/SettingsContainer/GameplayMenu/Scroll View | ScrollRect
+
+# The Backups screen's tabs (NativeUi/BackupsScreen.cs, D141): the Glossary's own tab band with its LB and RB, and its tab prefab (GlossaryMenu.m_TabsPrefab).
+# Checked when the screen is built, against the shell and the held prefab: a part that's gone turns off only the Backups screen, never the lobby.
+@BackupsTabs | ui-menu_glossary | GlossaryMenu
+BackupsTabs | ScaledContainer/Tabs/TabsContainer | HorizontalLayoutGroup
+BackupsTabs | ScaledContainer/Tabs/UIInputShortcut_V2-PrevTab | UIInputShortcut, InputShortcutSFXFMOD
+BackupsTabs | ScaledContainer/Tabs/UIInputShortcut_V2-NextTab | UIInputShortcut, InputShortcutSFXFMOD
+@GlossaryTab | ui-menu_glossary | GlossaryTab
+GlossaryTab |  | UnselectableAnimatedButton, Animator, GlossaryTab
+GlossaryTab | Background/Text (TMP) | TextMeshProUGUI
+
+# The host's pause menu on a friend's PC: its own bottom shortcut (Edit Lineup, off in the pause context), copied at its place for My Settings
+# (Campaign/Menus/MySettingsView.cs). Checked on each live menu before the copy; the menu is the game's, never loaded by the mod.
+@GameMenu | ui-menu_ingame | _GameMenu
+GameMenu | ScaledContainer/UIInputShortcut_EditLineup | UIInputShortcut, Animator, LayoutElement
+GameMenu | ScaledContainer/UIInputShortcut_EditLineup/Text (TMP) | TextMeshProUGUI, Localize, ContentSizeFitter
+GameMenu | ScaledContainer/UIInputShortcut_EditLineup/Text (TMP)/Container | 
+GameMenu | ScaledContainer/UIInputShortcut_EditLineup/Text (TMP)/Container/Content/Icon | Image, InputSpriteUI

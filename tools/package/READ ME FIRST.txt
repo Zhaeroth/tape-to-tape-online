@@ -1,0 +1,350 @@
+T2T Online {{VERSION}} - setup guide
+=====================================
+
+T2T Online lets friends play Tape to Tape together over the internet, like couch co-op: Quick Game
+matches and the whole campaign. One player hosts, up to three friends join, and everyone plays on
+their own PC. You get together in a lobby on the title screen (the Online row). When the host
+starts, every friend's controls play on the host's game, and each player's own game shows everything
+live on their own screen, at their own resolution: the host's menus, the campaign map, the matches.
+Until the host starts, your game, your controller and your saves stay yours. The run is the host's
+(it is saved on their PC), and your own profile still progresses: your stats, unlocks, bench quests
+and achievements count for you, at your own thresholds.
+
+Everything the mod does is on the game's own screens: the Online row on the title screen, the lobby,
+an Online tab in the game's Settings, a Save Backups screen and a Report a Problem row. There is no
+extra window, and the one key the mod adds is optional: Insert marks a moment for a problem
+report.
+
+This is a beta in active development: expect bugs, and expect changes from one version to the next.
+If anything looks wrong, see REPORTING A PROBLEM. The project's page, with the full guide, is
+github.com/Zhaeroth/tape-to-tape-online
+
+
+QUICK INSTALL (a few minutes, most of it the first launch)
+-------------
+1. Close Tape to Tape if it's running.
+2. Open the game folder: in Steam, right-click Tape to Tape > Manage > Browse local files. A folder
+   opens with "Tape to Tape.exe" in it. Leave it open.
+3. MelonLoader, the mod loader.
+{{#FRIENDS}}
+   Skip this step if your download has a "MelonLoader" folder in it (the "with-MelonLoader" zip):
+   MelonLoader is included there, unchanged.
+{{/FRIENDS}}
+   T2T Online is made for MelonLoader 0.7.3. Download MelonLoader.x64.zip from its official release
+   page, https://github.com/LavaGang/MelonLoader/releases/tag/v0.7.3 , and unzip it into the game
+   folder the way step 4 says. (Its SHA-256, if you want to check it:
+   5b2b2f3d1cd42b59ec886c5bdc2663edae87a0097a4f4a8f58c0965a99dda416.)
+4. Unzip the T2T Online zip INTO the game folder: right-click the zip > Extract All... > Browse...,
+   pick the game folder from step 2 itself (not a folder inside it; Extract All suggests a new
+   folder named after the zip, so change that), then Extract. If Windows asks about replacing files,
+   choose Replace. (With 7-Zip or WinRAR: copy the zip into the game folder, right-click it >
+   Extract Here.) What lands: the folder "Mods\T2TOnline" (the mod) and this file. Check:
+   "version.dll" and the folders "MelonLoader" and "Mods" now sit right next to "Tape to Tape.exe".
+   If they landed in a new subfolder, move them up.
+5. Launch Tape to Tape from Steam as usual. The first launch takes a few minutes longer (below). At
+   the title screen there is a new row, "Online", under Play Now: it worked.
+
+You need: Windows 10 or 11 (64-bit); Tape to Tape on Steam, fully updated (every player needs
+exactly the same game version, and T2T Online switches itself off on a game version it wasn't made
+for: the corner of the screen says so and the game plays normally); the same T2T Online version as
+the host (it is in the zip's name and at the top of this file; another version joins only if it uses
+the same network format, and the game then says everyone should have the same one); to be Steam
+friends with the host (only the host's Steam friends get a seat); a gamepad the game reads, or the
+keyboard and mouse; a voice call (Discord or any other); about 300 MB of free disk space, which
+MelonLoader uses for the files it prepares on the first launch.
+
+
+THE FIRST LAUNCH
+----------------
+- A black console window opens next to the game. That's MelonLoader. Leave it open: closing it
+  closes the game.
+- MelonLoader prepares the game for modding and needs the internet for that (it downloads two tools
+  from GitHub). This takes a few minutes, and the same happens on the first launch after a game
+  update. The game window can stay black or say "Not Responding" the whole time: leave it, the black
+  window shows the progress. Later launches are normal.
+- MelonLoader prints many lines, some in yellow, and says "0 UserLibs loaded" although T2T Online's
+  libraries loaded (it counts mods, not libraries). Those are normal. The yellow "missing
+  dependencies" list is not expected to name T2T Online.
+- If MelonLoader says the .NET 6 runtime is missing, Windows may ask for permission to install
+  "Microsoft .NET Runtime": allow it. If it doesn't install by itself, install ".NET 6.0 Runtime"
+  for Windows x64 from https://dotnet.microsoft.com/download/dotnet/6.0 and launch again.
+
+
+IF IT DOESN'T WORK
+------------------
+- No black window opened: the files aren't next to "Tape to Tape.exe" (steps 3 and 4). Your
+  antivirus may have removed version.dll: allow it, it is MelonLoader's loader.
+- Windows says "Part of this app has been blocked" (Windows 11's Smart App Control) or Defender
+  removes a file: MelonLoader's and T2T Online's files are not signed. Allow them in Windows
+  Security, or turn Smart App Control off (Windows Security > App & browser control).
+- The game starts but there is no Online row, and the top-left corner says why (it stays up for half
+  a minute once the title is up):
+  - "the game was updated after this T2T Online was made" (or "Steam has an update for the game
+    waiting", or "this game version is older than the one this T2T Online was made for"): nothing is
+    wrong with your install. The mod stays off until a T2T Online made for your game version is
+    installed, or until Steam has finished updating the game. The notice names where releases are:
+    github.com/Zhaeroth/tape-to-tape-online/releases . Hold Insert for 2 seconds to make a problem
+    report.
+  - "Online is off until old T2T Online files are deleted" (a game prompt, naming files): see
+    UPDATING.
+  - "T2T Online is off: part of it is from another version": the files of two versions are mixed.
+    Close the game, delete the files the notice names, then unzip the T2T Online zip into the game
+    folder again.
+  - anything else: see REPORTING A PROBLEM.
+- A MelonLoader setting can stop it: in UserData\Loader.cfg (made by the first launch),
+  "disable_subfolder_load = true" stops MelonLoader loading Mods\T2TOnline. Set it to false.
+- No Online row and nothing in the corner, or the black window says "Failed to start MelonLoader"
+  (or a box says INTERNAL FAILURE): MelonLoader couldn't prepare the game (no internet on that
+  launch, an antivirus, a launch cut off). Quit, delete the MelonLoader folder in the game folder,
+{{#PUBLIC}}
+  install MelonLoader again (step 3), unzip T2T Online again, and launch with the internet on. If
+  your antivirus removes
+{{/PUBLIC}}
+{{#FRIENDS}}
+  install MelonLoader again (step 3, or unzip the with-MelonLoader zip again), unzip T2T Online
+  again, and launch with the internet on. If your antivirus removes
+{{/FRIENDS}}
+  MelonLoader\Dependencies\Il2CppAssemblyGenerator\Cpp2IL\Cpp2IL.exe, allow it (MelonLoader
+  downloads it to read the game). If it still fails, see REPORTING A PROBLEM (MelonLoader\Latest.log
+  is the log that matters here).
+- T2T Online and another mod loader (BepInEx) in the same game folder is not supported.
+
+
+UPDATING
+--------
+Close the game. Unzip the new T2T Online zip into the game folder the same way and choose Replace.
+Your settings, logs, save backups and co-op runs stay as they are. Update together with the people
+you play with: when versions differ, the game says so on screen when you join, and everyone installs
+the host's version.
+- A new Tape to Tape update switches online off until a T2T Online release for it is out. To hear
+  about releases, open the project's page on GitHub and choose Watch > Custom > Releases.
+- From 0.10.0 Beta or earlier: those versions put their files in the game folder's "Plugins" and
+  "UserLibs" folders (and "LICENSE" and "THIRD_PARTY_NOTICES.md" next to the game), not in
+  "Mods\T2TOnline". On the first start the game names each old file in a prompt, online stays off,
+  and the game plays normally. Close the game, delete the files the prompt names, and start again.
+  Your settings move by themselves to UserData\T2TOnline\settings.cfg, and the session logs of the
+  older versions are deleted once (they hold Steam names).
+- If a new version says it needs a newer MelonLoader, first delete "version.dll" and the
+  "MelonLoader" folder, then install MelonLoader again (QUICK INSTALL step 3).
+
+
+REMOVING T2T ONLINE
+-------------------
+Close the game first. You can remove the mod at any time, even right after a crash: your keyboard
+and mouse stay on your own game. If you hosted a co-op campaign and the game closed in the middle of
+a match, start the game once (with the mod) and quit at the title screen before you remove it: that
+puts your own run's counters back. If you restored saves from Save Backups, start the game once more
+before you remove the mod.
+1. The mod only (MelonLoader and other mods stay): delete the folder "Mods\T2TOnline" and this file
+   ("T2T Online - READ ME FIRST.txt") from the game folder. The mod is then gone. (Files in
+   "Plugins" or "UserLibs" that start with T2TOnline come from 0.10.0 or earlier: delete those too.)
+2. MelonLoader too (only if you have no other mods): also delete "version.dll" and the folders
+   "MelonLoader", "Mods", "Plugins", "UserLibs" and "UserData" from the game folder. If MelonLoader
+   installed .NET 6 for you, it stays in Windows' Apps list; remove it only if nothing else needs
+   it.
+3. Your data (the mod's own, never needed by the game):
+   - "UserData\T2TOnline" in the game folder: the mod's settings, logs and problem reports. Deleting
+     it resets the settings.
+   - "%LOCALAPPDATA%\T2T Online" (paste that into Explorer's address bar): your save backups, a
+     host's co-op runs, the record of the progress shared with you and the host logos your run
+     history shows. A host's co-op runs are kept only here: deleting the folder deletes them. Keep
+     it if you may come back.
+   - A ".bac" file in the game's save folder is the game's own copy: leave it.
+   Each of the two folders has a README.txt that says what it holds. Your own saves keep the
+   progress you earned together: that's intended. Without the mod, a run shared with a host's custom
+   logo shows the game's default logo in your run history. Steam's "Verify integrity of game files"
+   does not remove the mod; deleting the files above does.
+
+
+CHECK YOUR DOWNLOAD
+-------------------
+Each zip comes with its SHA-256 (on the release page, or in the .sha256 file beside it). To check
+yours, open PowerShell in the folder with the zip and run
+    Get-FileHash "<the zip's file name>" -Algorithm SHA256
+The Hash it prints must equal the one you were given. If it doesn't, download the zip again.
+
+
+PLAYING TOGETHER
+----------------
+Get on a voice call first. One player hosts and the others join.
+
+IF YOU HOST: on the title, press Down to the Online row, press A and pick Host Lobby. The lobby
+opens with you in the first of four seats. Invite your friends: A on an empty seat (or the Invite
+Friends button) opens a list of your Steam friends with an Invite button, and a "Steam overlay"
+button for Steam's own invite window. Press LB or RB to choose the Game Mode, Campaign or Quick Game
+(for a campaign, choose a Co-op Save slot too), and press Start when everyone is in. Steps 4 to 9
+below apply to you too.
+
+IF YOU JOIN:
+1. Stay at the title screen with your gamepad connected. If your game asks whether you want the
+   tutorial (a new profile asks once), answer it now or while you wait in the lobby: once the host
+   starts, your game can't answer it, and closes the question for you (as "No").
+2. When the host says they're hosting, join their lobby:
+   - On the title, press Down to the Online row and press A. Pick Join Lobby: a list shows which of
+     your Steam friends are hosting. Pick the host's row and press A. (A greyed row has a "Why?"
+     that says what is wrong: another version of T2T Online, another game update, a full lobby. X
+     looks again.)
+   - Or accept the host's Steam invite (in game, or in Steam: with the game closed, Steam starts it
+     and it joins once the title screen is up). Or use Join Game on the host's name in your Steam
+     friends list.
+   - If you are in your own run, a notice asks you to go back to the title screen first (your run is
+     saved).
+   - If Steam started your game for the invite and your first press does nothing, press again: the
+     first one can just wake your controller.
+   - If a message says Steam couldn't check your friends list, restart Steam and the game: the mod
+     only connects to players Steam confirms as friends, and refuses when Steam can't say.
+3. In the lobby, your pad answers YOUR lobby screen. Your own game, controller and saves are still
+   yours, and nothing goes to the host's game. You can mark yourself Ready (A on your card; the host
+   doesn't need it, and the mark clears when a game ends), open your own Settings (RT), look at who
+   is there, or leave (B asks first).
+4. The host presses Start: 3, 2, 1 shows on every screen (the host can still cancel it). Then your
+   controls play on the host's game, not yours, and your own game follows the host's: their menus,
+   the campaign map and the matches show on your screen by themselves. On your own PC only the My
+   Settings prompt, the map's Menu entry and your own Settings answer you meanwhile (step 6). The
+   host is the one who confirms choices only one player makes, as on the couch.
+5. A Quick Game: the game's own controller screen opens on every screen. Move your icon to a side
+   with your own controls and ready up; the host starts the match.
+6. The campaign: everyone sees the same map, the same match previews, the same rewards and event
+   choices, with the current selection highlighted; talk the choices over. Every screen of the run
+   is the game's own, in your language where the game has the text. (The tutorial, Shootout,
+   Tournament and Practice aren't played online.)
+   - Everyone in the lobby is on the team when the campaign starts: nobody needs the game's
+     Controllers screen. A friend who joins during a run watches the rest of the match in play and
+     plays from the next one. The Controllers screen (on the map's menu) still lets a player sit
+     out, and that choice is kept for as long as the host keeps hosting.
+   - Matches load on your PC by themselves and play live. Which skater is yours: the marker over it
+     has your colour.
+   - Your pad vibrates for your own skater if YOUR game's Controller rumble setting is on (the
+     host's setting doesn't change yours). On the keyboard there's no rumble.
+   - Your own settings, mid-run: while the host's pause menu is up, a "My Settings" prompt sits at
+     the bottom of the screen (RT on a pad, Left Alt on the keyboard, or click it). On the campaign
+     map, the map's own "Menu" entry opens your Settings (Start on a pad, Esc on the keyboard, or
+     click it). That opens the game's Settings: your own controls, volume, language and the Online
+     tab. What you change there is your own: it stays on your PC and doesn't change the host's game.
+     While it is open in a match, the host's AI plays your skater after 3 seconds, until you close
+     it with the menu's own Back (B or Esc).
+   - Progress: what the run credits counts on your own profile too, from your own numbers. If an
+     unlock needs 15 goals and you're at 14, the next goal unlocks it for you, whatever the host's
+     count. Your game takes progress only from the host you joined, and only as much as your own
+     play with that host explains.
+   - Achievements earned together (a mercy win, every skater scoring, winning the run...) unlock for
+     you too, for the matches your own game played (at least 20 seconds of them) and the run it
+     followed. A friend who drops out of a match before its end, or joins in its last seconds,
+     doesn't get that match's shared achievements.
+7. When a match or a run ends, or the host backs out of the start, your game goes back to your lobby
+   by itself: your controller and game are yours again, and the host can start again. Between games
+   you can leave with B.
+8. If your connection drops, the host's AI plays your skater after 3 seconds and the host keeps your
+   seat (30 seconds in the lobby, 2 minutes in a game). Your game tries to rejoin by itself, and
+   your skater is yours again when it does. If your game can't load the host's next match, a prompt
+   offers Try again or Leave.
+9. To finish, leave the lobby (B in the lobby asks), or in the middle of a game open your Settings
+   (see step 6), go to the Online tab and choose Leave Online Game (the host chooses End Online
+   Game, which ends it for everyone). Then quit the game normally. Quitting is always safe.
+Words in the lobby are drafted in 15 languages and haven't been checked by native speakers yet: if a
+word reads wrong in your language, report which and what it should say. A message with one button
+tells you what went wrong and what to do: read it, press the button.
+
+
+SETTINGS
+--------
+The mod's settings are on the Online tab of the game's own Settings menu: from the title's Settings
+row, from the Online menu's "Online Settings" row, from the lobby (RT), or mid-run (see PLAYING
+TOGETHER). The rows:
+- Share Achievements: achievements earned together unlock on every player's own Steam account. Off:
+  you neither send nor receive them.
+- Share Progress: a co-op run counts on every player's own profile. Off: you send none, and what
+  comes in waits until you turn it back on in the same online game.
+- Play Online With: Auto, Controller or Keyboard. Auto takes a gamepad if one is connected, else the
+  keyboard and mouse. It applies when you join and when the host starts a game.
+- Direct Connections (shown only when it is on, or when Steam has refused to keep your connections
+  relayed on this PC): lets Steam connect you straight to other players, which shares your IP
+  address with them. Turning it on asks first and takes effect from the next start of the game.
+  It can be turned on only while nobody else is in your online game (turn it on at the title
+  screen); it can be turned off at any time. Leave it off unless online won't start otherwise.
+- Save Backups [View]: see SAVE BACKUPS. Only from the title screen.
+- Problem Report [Make Report]: see REPORTING A PROBLEM.
+- Leave Online Game or End Online Game: only in an online game.
+The same choices are saved in UserData\T2TOnline\settings.cfg.
+
+
+SAVE BACKUPS
+------------
+Before every online game (when you host, when you follow a host, and when a game starts) the mod
+copies your game saves and your co-op runs to "%LOCALAPPDATA%\T2T Online\backups". It keeps the
+newest 10, the first of each of the last 7 days with one, and the very first one (a few hundred KB
+each). To restore one: at the title screen open Settings > Online > Save Backups [View]. The
+Backups screen has two tabs (LB and RB): Your Saves, and Co-op Runs, a row for each backup with the
+time it was taken (your local time). Press A on a row and answer the game's question. What is there
+now is backed up first, so a restore can be undone with another one. Restoring Your Saves needs the
+game to restart: a prompt offers Later or Quit, and until you restart, nothing is saved. If Steam
+Cloud has newer saves, the game uses those, and a notice says so.
+
+
+PRIVACY
+-------
+- On your PC: the mod's logs (up to 20 files, up to 30 days), the problem reports you make, your
+  settings, your save backups and a host's co-op runs. The mod uploads nothing anywhere, and its
+  logs and problem reports hold no Steam names, no Steam IDs, no folder names, no IP addresses and
+  no local times: other players appear in them as tags like P#a0c1d2 (a tag changes with every
+  lobby).
+- To the other players in your session: your pad's presses, and what the game needs to show the
+  match. Through Steam, to your Steam friends: that you host or are in a friend's game and how many
+  players there are (shown in Steam's friends list; for a friend it doesn't say whose game), and
+  what lets a friend join you.
+- Your IP address stays private: every connection goes through Steam's relays. The Direct
+  Connections row (or the AllowDirectConnections entry in UserData\T2TOnline\settings.cfg) can allow
+  direct connections (restart the game after changing it); with it on, your address is shared with
+  the players you connect to. Leave it off unless a network blocks Steam's relays.
+- While the mod is loaded, the game's exception reports, analytics and Unity's crash reporter are
+  off. A crash of the game itself (the program closing with an error) is handled by Unity's crash
+  handler, which ships with every Unity game and which the mod can't switch off without also
+  stopping the crash files the game keeps on your PC: it may send a crash report (where in the code
+  the crash happened, the engine version and basic details of the PC) to Unity for the game's
+  developers.
+- MelonLoader (not T2T Online) contacts api.melonloader.com on every launch, and downloads tools
+  from GitHub on the first launch and after a game update. MelonLoader loads every DLL in the
+  folders "Mods", "Plugins" and "UserLibs": only put files there that you trust.
+- Another player in your session is your Steam friend, but the host's game decides what your game
+  shows and how your progress changes, as on a couch. Your game limits what a host can change (see
+  PLAYING TOGETHER, Progress), and Settings > Online turns sharing off.
+
+
+REPORTING A PROBLEM
+-------------------
+1. Right after it happens, press Insert. The game says "Moment 1 marked for a bug report." and the
+   problem report will show where.
+2. Quit the game, or keep playing: open Settings > Online and choose Problem Report > Make Report
+   (or, at the title screen, Online > Report a Problem). It makes one zip in
+   UserData\T2TOnline\reports\ (the newest 5 are kept) and the game says where it is. At the title
+   screen its prompt has Show File, which opens Explorer with the zip selected. The zip holds the
+   newest session logs of the mod, MelonLoader's and Unity's logs cleaned of Steam names and IDs,
+   folder names, IP addresses and local times, and a plain-text "report.txt" saying what is in it.
+   Open it and look first if you like.
+3. Post it with a short description (what you saw, what you expected, which marked moment) as an
+   issue on the project's page, github.com/Zhaeroth/tape-to-tape-online/issues . Each player in a
+   session makes their own.
+After an online game that ended in an error, or after the game closed in the middle of one, the game
+offers a report once at the title screen ("Your last online game ended with an error. Make a problem
+report now?", or "The game closed during your last online game. ..."). On a game version the mod
+doesn't support yet there is no Online tab: hold Insert for 2 seconds to make the report. If the
+game can't start, the only log left is MelonLoader\Latest.log in the game folder. It isn't cleaned:
+it holds your game folder's path (with your Windows user name in it), your local time and the names
+MelonLoader's own lines show. Look through it before you share it, and don't post it publicly: say
+in your issue that you have it.
+
+
+GOOD TO KNOW
+------------
+- Your own campaign run is never touched: the host's run is kept in the mod's own folder while you
+  play together. Your profile and stats are saved only with the progress you earned together.
+- If anything goes wrong mid-session, quitting and relaunching the game is always safe.
+- If T2T Online stops after an error, a message tells you, the corner says so and stays up, and your
+  game no longer follows the host's: Settings > Online still works. Quit and relaunch the game, then
+  report it.
+- Playing on the keyboard: a crash can't take your keyboard away from your game, because the game's
+  saved controller setup isn't changed while a session holds your keyboard. If yours ever doesn't
+  answer after a crash, start the game once with the mod: it gives it back.
+- This is a beta. Known limits: friends feel a small delay (their controls travel to the host
+  first); only Quick Game and the campaign are online; up to four players, Steam friends of the host
+  only; Windows only; MelonLoader 0.7.3 only. The project's page lists them all.

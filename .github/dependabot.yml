@@ -1,0 +1,16 @@
+# Keeps the actions in .github/workflows and the NuGet packages (test projects only; the shipped assemblies reference
+# no package) on their current versions. A NuGet update also rewrites packages.lock.json.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: ci
+  - package-ecosystem: nuget
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: build

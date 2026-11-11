@@ -1,0 +1,31 @@
+# logcheck.py's allow file: log calls that may still write a Steam name or ID, a lobby ID, a folder path, a raw
+# exception message, player-written text, a local time or an object's name, per file and rule, each with a reason. The log's backstop
+# (LogScrub, in ModLog) still replaces names, IDs, folders and addresses in every line these write; the call sites
+# themselves use tags, labels and SafeError. Each entry is a vetted exception whose reason says why its lines can't
+# write what the rule looks for. Counts may only go down: a stale count fails the check too.
+# <path> | <rule> | <count> | <reason>
+src/T2TOnline.Plugin/Online/OnlineSession.Browser.cs | path | 2 | SteamRuntime.Status holds no folder: it names the library "by path" or "by name"
+src/T2TOnline.Plugin/Online/OnlineSession.Steam.cs | path | 1 | SteamRuntime.Status holds no folder: it names the library "by path" or "by name"
+src/T2TOnline.Plugin/Online/OnlineSession.Text.cs | name | 1 | Notify(id, line, logLine): the first line is the screen's (the player's name), the second the log's copy (their tag)
+src/T2TOnline.Plugin/Online/OnlineSession.cs | path | 2 | SteamRuntime.Status holds no folder: it names the library "by path" or "by name"; _link.Path is the SteamCallResultPath the lobby call used (SteamUtils or ManualDispatch), not a folder
+src/T2TOnline.Plugin/Streaming/Sounds.cs | path | 1 | the Harmony prefix's parameter must be named path (Harmony binds it by name): an FMOD event path (event:/...), not a folder
+src/T2TOnline.Steam/SteamLobbyLink.cs | path | 2 | call.Path is the SteamCallResultPath the lobby call used (SteamUtils or ManualDispatch), not a folder
+src/T2TOnline.Plugin/Campaign/Menus/ControllerGlyphViews.cs | objectname | 1 | a Rewired input action's name (the game's own data)
+src/T2TOnline.Plugin/Campaign/Menus/EventDevKey.cs | objectname | 1 | an event node asset's name (the game's own: the developer's event key)
+src/T2TOnline.Plugin/Campaign/Menus/EventViews.cs | objectname | 1 | an event node asset's name (the game's own)
+src/T2TOnline.Plugin/Campaign/Menus/TipViews.cs | objectname | 1 | a speech sequence asset's name (the game's own tips)
+src/T2TOnline.Plugin/Campaign/Scenes/PreviewMirror.cs | objectname | 1 | a reward slot's sprite (the game's own art)
+src/T2TOnline.Plugin/Input/HeldPadGuard.cs | objectname | 1 | a gamepad's product name (kept in logs on purpose: input bugs need it)
+src/T2TOnline.Plugin/Input/LocalPad.cs | objectname | 1 | a gamepad's product name (kept in logs on purpose: input bugs need it)
+src/T2TOnline.Plugin/Input/PromptNames.cs | objectname | 2 | Rewired input actions' names (the game's own data)
+src/T2TOnline.Plugin/Input/PromptPin.cs | objectname | 2 | a Rewired controller's product name, a map category's and an input action's (the device's and the game's own)
+src/T2TOnline.Plugin/Input/VirtualKeyboard.cs | objectname | 1 | a Rewired player's name (the game's Rewired data: Player0 to Player3)
+src/T2TOnline.Plugin/Input/VirtualPad.cs | objectname | 1 | a Rewired player's name (the game's Rewired data: Player0 to Player3)
+src/T2TOnline.Plugin/Match/MatchSetup.cs | objectname | 1 | a scene's name (the game's own)
+src/T2TOnline.Plugin/NativeLobby/LobbyLocalization.cs | objectname | 1 | the game's language source asset's name
+src/T2TOnline.Plugin/NativeLobby/LobbyShell.cs | objectname | 1 | a lobby screen part's name (the mod's own clones), its IDs cut by UiObjectName.ForLog
+src/T2TOnline.Plugin/Online/OnlineSession.Remap.cs | objectname | 2 | a gamepad's product name (kept in logs on purpose: input bugs need it)
+src/T2TOnline.Plugin/Spikes/LoopbackSpike.cs | objectname | 1 | a gamepad's product name (kept in logs on purpose: input bugs need it)
+src/T2TOnline.Plugin/Streaming/Rumble.cs | objectname | 1 | a gamepad's product name (kept in logs on purpose: input bugs need it)
+src/T2TOnline.Core/Campaign/ProgressApplier.cs | name | 2 | _host is the host's log tag (ProgressFriend makes the applier with _hostTag), never a name
+src/T2TOnline.Core/Campaign/SaveBackupFiles.cs | jsonname | 1 | a backup manifest's file name (the mod's own manifest.json, each checked by IsPlainFileName): a save file's name, never a person's

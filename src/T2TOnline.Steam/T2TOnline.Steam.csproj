@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Game-independent Steam bindings: flat-API P/Invoke into steam_api64 for networking messages, ping, lobbies,
+       call results and friends. Steam is initialised and pumped by the game (Facepunch.Steamworks, manual dispatch);
+       this library never initialises Steam, runs callbacks or registers callbacks (a developer's networking debug
+       output, SteamDebugOutput, is the one function it hands Steam). Loads inside the game
+       (MelonLoader's .NET 6 runtime) and in plain .NET for tests, where Steam is simply reported unavailable. -->
+  <PropertyGroup>
+    <TargetFramework>$(T2TModTargetFramework)</TargetFramework>
+    <RootNamespace>T2TOnline.Steam</RootNamespace>
+    <IsGameIndependent>true</IsGameIndependent>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="T2TOnline.Steam.Tests" />
+  </ItemGroup>
+</Project>

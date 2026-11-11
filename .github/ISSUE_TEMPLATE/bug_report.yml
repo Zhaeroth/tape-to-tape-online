@@ -1,0 +1,98 @@
+name: Bug report
+description: Something went wrong in a session, during install, or in a menu.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. A problem report zip makes most problems findable: the field below says how to make one.
+        For a question about installing or playing, use [Discussions](https://github.com/Zhaeroth/tape-to-tape-online/discussions) instead.
+  - type: input
+    id: version
+    attributes:
+      label: T2T Online version
+      description: In the problem report's report.txt, and in the name of the zip you installed.
+      placeholder: for example 0.12.2 Beta
+    validations:
+      required: true
+  - type: dropdown
+    id: role
+    attributes:
+      label: Your role
+      options:
+        - Hosting
+        - Joining a host
+        - Not in a session
+    validations:
+      required: true
+  - type: dropdown
+    id: players
+    attributes:
+      label: Players in the session
+      options:
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where it happened
+      options:
+        - Installing or starting the game
+        - Title screen or lobby
+        - Quick Game
+        - Campaign
+        - Somewhere else
+    validations:
+      required: true
+  - type: dropdown
+    id: controls
+    attributes:
+      label: Your controls
+      options:
+        - Gamepad
+        - Keyboard and mouse
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you saw, and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Host a lobby and invite one friend
+        2. Start a Quick Game
+        3. ...
+  - type: input
+    id: when
+    attributes:
+      label: Marked moment
+      description: If you pressed Insert when it happened, the number the game showed ("Moment 1 marked for a bug report."), for example 1. Otherwise, roughly how long before you made the report it happened, for example "about 5 minutes before".
+      placeholder: "1"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Problem report zip
+      description: |
+        In the game open **Settings > Online** and choose **Problem Report** > **Make Report** (or, on the title screen,
+        **Online** > **Report a Problem**). The game says where the zip is (`UserData\T2TOnline\reports\` in the game
+        folder), and at the title screen its prompt has **Show File**, which opens Explorer with the zip selected: drag
+        it here. It holds cleaned logs and no Steam names, Steam IDs, folder paths or local times, and its `report.txt`
+        lists what is inside. Add a screenshot if the problem is on screen, but not one that shows your Steam friends
+        list. Please don't attach raw log files. If the game won't start, or its Settings has no Online tab (a game
+        update the mod doesn't support yet: hold Insert for 2 seconds to make the zip), write "no zip" and say why; the
+        maintainers will say what to send.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before you send
+      options:
+        - label: Every player runs MelonLoader 0.7.3 and the same T2T Online release.
+        - label: Tape to Tape is up to date on every player's PC.

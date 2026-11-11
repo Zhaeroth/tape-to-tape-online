@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Game-independent networking core: protocol, bit packing, clocks, jitter buffers.
+       Loads inside the game (MelonLoader's .NET 6 runtime) and in plain .NET for tests. -->
+  <PropertyGroup>
+    <TargetFramework>$(T2TModTargetFramework)</TargetFramework>
+    <RootNamespace>T2TOnline.Core</RootNamespace>
+    <IsGameIndependent>true</IsGameIndependent>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="T2TOnline.Core.Tests" />
+  </ItemGroup>
+</Project>

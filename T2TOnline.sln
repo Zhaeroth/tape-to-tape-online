@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BB0A79D7-0B8C-4A3A-9E62-1F2948A8BABF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T2TOnline.Core", "src\T2TOnline.Core\T2TOnline.Core.csproj", "{0F987CC6-CE6E-4681-A3D8-32355A7794D9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{CFE21902-6B78-46F5-9F93-F56F0DD5C09F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T2TOnline.Core.Tests", "tests\T2TOnline.Core.Tests\T2TOnline.Core.Tests.csproj", "{65368AC6-6F45-4B7A-B59C-24F9E0A8DC74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T2TOnline.Plugin", "src\T2TOnline.Plugin\T2TOnline.Plugin.csproj", "{90E781E2-8DAE-4728-AF0A-75BC24AB361F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T2TOnline.Steam", "src\T2TOnline.Steam\T2TOnline.Steam.csproj", "{AEF1E1FA-8599-4B21-A079-F399D2DC369F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T2TOnline.Steam.Tests", "tests\T2TOnline.Steam.Tests\T2TOnline.Steam.Tests.csproj", "{079F591F-454E-4A61-99E3-135FB24F4590}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F987CC6-CE6E-4681-A3D8-32355A7794D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F987CC6-CE6E-4681-A3D8-32355A7794D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F987CC6-CE6E-4681-A3D8-32355A7794D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F987CC6-CE6E-4681-A3D8-32355A7794D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65368AC6-6F45-4B7A-B59C-24F9E0A8DC74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65368AC6-6F45-4B7A-B59C-24F9E0A8DC74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65368AC6-6F45-4B7A-B59C-24F9E0A8DC74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65368AC6-6F45-4B7A-B59C-24F9E0A8DC74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90E781E2-8DAE-4728-AF0A-75BC24AB361F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90E781E2-8DAE-4728-AF0A-75BC24AB361F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90E781E2-8DAE-4728-AF0A-75BC24AB361F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90E781E2-8DAE-4728-AF0A-75BC24AB361F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEF1E1FA-8599-4B21-A079-F399D2DC369F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEF1E1FA-8599-4B21-A079-F399D2DC369F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEF1E1FA-8599-4B21-A079-F399D2DC369F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEF1E1FA-8599-4B21-A079-F399D2DC369F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{079F591F-454E-4A61-99E3-135FB24F4590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{079F591F-454E-4A61-99E3-135FB24F4590}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{079F591F-454E-4A61-99E3-135FB24F4590}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{079F591F-454E-4A61-99E3-135FB24F4590}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0F987CC6-CE6E-4681-A3D8-32355A7794D9} = {BB0A79D7-0B8C-4A3A-9E62-1F2948A8BABF}
+		{65368AC6-6F45-4B7A-B59C-24F9E0A8DC74} = {CFE21902-6B78-46F5-9F93-F56F0DD5C09F}
+		{90E781E2-8DAE-4728-AF0A-75BC24AB361F} = {BB0A79D7-0B8C-4A3A-9E62-1F2948A8BABF}
+		{AEF1E1FA-8599-4B21-A079-F399D2DC369F} = {BB0A79D7-0B8C-4A3A-9E62-1F2948A8BABF}
+		{079F591F-454E-4A61-99E3-135FB24F4590} = {CFE21902-6B78-46F5-9F93-F56F0DD5C09F}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,52 @@
+<Project>
+  <!-- Shared settings for every project in the repository. -->
+  <PropertyGroup>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+    <DebugType>portable</DebugType>
+    <Company>T2T Online</Company>
+    <Product>T2T Online</Product>
+    <Copyright>Copyright (c) 2026 Zhaeroth</Copyright>
+    <VersionPrefix>0.12.0</VersionPrefix>
+    <VersionSuffix>beta</VersionSuffix>
+    <!-- The game runs MelonLoader's .NET 6 runtime, so everything that loads into it targets net6.0. -->
+    <T2TModTargetFramework>net6.0</T2TModTargetFramework>
+    <!-- Never fetch targeting packs for frameworks we don't build. -->
+    <DisableTransitiveFrameworkReferenceDownloads>true</DisableTransitiveFrameworkReferenceDownloads>
+    <!-- Every restore is recorded in each project's packages.lock.json (committed). CI restores in locked mode, so a
+         package that changed upstream, or a lock file that is out of date, fails the build instead of being picked up. -->
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RestoreLockedMode Condition="'$(CI)' == 'true'">true</RestoreLockedMode>
+  </PropertyGroup>
+
+  <!-- Release builds name source and PDB paths from the repository root as /_/, so the shipped DLLs and PDBs don't
+       carry the folder they were built in. -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <T2TRepoRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)'))</T2TRepoRoot>
+    <PathMap Condition="'$(PathMap)' != ''">$(T2TRepoRoot)=/_/,$(PathMap)</PathMap>
+    <PathMap Condition="'$(PathMap)' == ''">$(T2TRepoRoot)=/_/</PathMap>
+    <!-- The SDK's Source Link would write a map from the build folder to the repository's web address into every PDB.
+         Source control is still read for the commit the informational version carries. -->
+    <EnableSourceLink>false</EnableSourceLink>
+  </PropertyGroup>
+
+  <!-- Game-independent libraries must not depend on Unity or the game. -->
+  <PropertyGroup Condition="'$(IsGameIndependent)' == 'true'">
+    <IsTrimmable>false</IsTrimmable>
+  </PropertyGroup>
+
+  <!-- The game folder the plugin builds against: -p:T2TGameDir=... first, then the T2T_GAME_DIR environment variable,
+       then Directory.Build.local.props (not committed; see Directory.Build.local.props.example). -->
+  <PropertyGroup>
+    <T2TGameDir Condition="'$(T2TGameDir)' == ''">$(T2T_GAME_DIR)</T2TGameDir>
+  </PropertyGroup>
+  <Import Project="$(MSBuildThisFileDirectory)Directory.Build.local.props"
+          Condition="Exists('$(MSBuildThisFileDirectory)Directory.Build.local.props')" />
+</Project>

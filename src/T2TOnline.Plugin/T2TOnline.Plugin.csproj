@@ -1,0 +1,81 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- The MelonLoader plugin that runs inside the game. It compiles against MelonLoader's own assemblies and the
+       interop assemblies MelonLoader generates from the game on first launch. Those are game-derived, so they are
+       never committed: point T2TGameDir at a game folder (or a copy of its MelonLoader folder) to build. -->
+  <PropertyGroup>
+    <TargetFramework>$(T2TModTargetFramework)</TargetFramework>
+    <AssemblyName>T2TOnline</AssemblyName>
+    <RootNamespace>T2TOnline.Plugin</RootNamespace>
+    <T2TGameDir Condition="'$(T2TGameDir)' == ''">$(MSBuildThisFileDirectory)..\..\lib\game</T2TGameDir>
+    <MelonDir>$(T2TGameDir)\MelonLoader</MelonDir>
+    <HasInteropAssemblies Condition="Exists('$(MelonDir)\Il2CppAssemblies')">true</HasInteropAssemblies>
+    <DefineConstants Condition="'$(HasInteropAssemblies)' == 'true'">$(DefineConstants);HAS_INTEROP</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Hooks\hooks.txt" LogicalName="T2TOnline.hooks.txt" />
+    <EmbeddedResource Include="Hooks\menus_initdata.txt" LogicalName="T2TOnline.menus_initdata.txt" />
+    <EmbeddedResource Include="Hooks\clientmode.txt" LogicalName="T2TOnline.clientmode.txt" />
+    <EmbeddedResource Include="Hooks\presentation.txt" LogicalName="T2TOnline.presentation.txt" />
+    <EmbeddedResource Include="Hooks\ui_parts.txt" LogicalName="T2TOnline.ui_parts.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\T2TOnline.Core\T2TOnline.Core.csproj" />
+    <ProjectReference Include="..\T2TOnline.Steam\T2TOnline.Steam.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="MelonLoader" HintPath="$(MelonDir)\net6\MelonLoader.dll" Private="false" />
+    <Reference Include="0Harmony" HintPath="$(MelonDir)\net6\0Harmony.dll" Private="false" />
+    <Reference Include="Il2CppInterop.Runtime" HintPath="$(MelonDir)\net6\Il2CppInterop.Runtime.dll" Private="false" />
+    <Reference Include="Il2CppInterop.Common" HintPath="$(MelonDir)\net6\Il2CppInterop.Common.dll" Private="false" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(HasInteropAssemblies)' == 'true'">
+    <Reference Include="$(MelonDir)\Il2CppAssemblies\*.dll" Private="false" T2TInterop="true" />
+  </ItemGroup>
+
+  <!-- MelonInfo needs the version as a constant: written from the one version in Directory.Build.props (VersionPrefix and
+       VersionSuffix, "0.9.2-beta"), so MelonLoader's own line, the mod's log and the screens all name the same release. -->
+  <Target Name="WriteBuildVersion" BeforeTargets="BeforeCompile;CoreCompile">
+    <PropertyGroup>
+      <BuildVersionFile>$(IntermediateOutputPath)BuildVersion.g.cs</BuildVersionFile>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(BuildVersionFile)" Overwrite="true" WriteOnlyWhenDifferent="true"
+                      Lines="// &lt;auto-generated/&gt;;namespace T2TOnline.Plugin%3B;internal static class BuildVersion { public const string Release = &quot;$(Version)&quot;%3B }" />
+    <ItemGroup>
+      <Compile Remove="$(BuildVersionFile)" />
+      <Compile Include="$(BuildVersionFile)" />
+      <FileWrites Include="$(BuildVersionFile)" />
+    </ItemGroup>
+  </Target>
+
+  <!-- Every interop assembly the plugin may reference is an optional dependency for MelonLoader, written from the project's
+       own interop references above (so the list can't fall behind them): on a first launch or a regeneration those files
+       don't exist yet when MelonLoader sorts its plugins, and without the list it prints "Some Melons are missing
+       dependencies" for each one. The sort still tries to load every reference first and reads the list only for one it
+       couldn't load, so D108's path is the same (MelonLoader 0.7.3, DependencyGraph). The list is the whole folder (a
+       superset of what the compiler keeps), so a new reference never needs an edit here. -->
+  <Target Name="WriteOptionalDependencies" BeforeTargets="BeforeCompile;CoreCompile" Condition="'$(HasInteropAssemblies)' == 'true'">
+    <PropertyGroup>
+      <OptionalDependenciesFile>$(IntermediateOutputPath)OptionalDependencies.g.cs</OptionalDependenciesFile>
+    </PropertyGroup>
+    <ItemGroup>
+      <_T2TOptionalDependency Include="@(Reference->WithMetadataValue('T2TInterop', 'true')->'%(Filename)')" />
+    </ItemGroup>
+    <Error Condition="'@(_T2TOptionalDependency)' == ''" Text="No interop assemblies found under '$(MelonDir)\Il2CppAssemblies' for MelonOptionalDependencies." />
+    <WriteLinesToFile File="$(OptionalDependenciesFile)" Overwrite="true" WriteOnlyWhenDifferent="true"
+                      Lines="// &lt;auto-generated/&gt;;[assembly: MelonLoader.MelonOptionalDependencies(new string[];{;@(_T2TOptionalDependency->'    &quot;%(Identity)&quot;,');})]" />
+    <ItemGroup>
+      <Compile Remove="$(OptionalDependenciesFile)" />
+      <Compile Include="$(OptionalDependenciesFile)" />
+      <FileWrites Include="$(OptionalDependenciesFile)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="CheckMelonLoader" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="!Exists('$(MelonDir)\net6\MelonLoader.dll')"
+           Text="MelonLoader not found under '$(MelonDir)'. Set T2TGameDir to the game folder (see docs/DEVELOPMENT.md)." />
+  </Target>
+</Project>

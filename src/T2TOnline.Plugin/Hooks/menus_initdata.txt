@@ -1,0 +1,27 @@
+# Concrete InitData overrides (base AbstractMenu.InitData is an empty, folded method: never patch it)
+Tournament.UI.TournamentMenu::InitData
+Tape2Tape.Hockey.UI.BenchwarmerMenu::InitData
+Tape2Tape.Hockey.UI.CanadaCurseMenu::InitData
+Tape2Tape.Hockey.UI.ChooseMetaMenu::InitData
+Tape2Tape.Hockey.UI.ControllerAssignmentMenu::InitData
+Tape2Tape.Hockey.UI.GameMenu::InitData
+Tape2Tape.Hockey.UI.GameSettingsMenuV2::InitData
+Tape2Tape.Hockey.UI.ShootoutGameSettingsMenuV2::InitData
+Tape2Tape.Hockey.UI.EventChoiceMenu::InitData
+Tape2Tape.Hockey.UI.GlossaryMenu::InitData
+Tape2Tape.Hockey.UI.LineupMenu::InitData
+Tape2Tape.Hockey.UI.OldSquadMenu::InitData
+Tape2Tape.Hockey.UI.PermanentUnlockMenu::InitData
+Tape2Tape.Hockey.UI.PostGameSummaryMenu::InitData
+Tape2Tape.Hockey.UI.RelicRewardMenu::InitData
+Tape2Tape.Hockey.UI.RunEndMenu::InitData
+Tape2Tape.Hockey.UI.SkaterPowerupRewardMenu::InitData
+Tape2Tape.Hockey.UI.UnlockableMenu::InitData
+Tape2Tape.Customization.UI.CustomizableDismissablePrompt::InitData
+Tape2Tape.Customization.UI.CustomizableYesNoPrompt::InitData
+Tape2Tape.Customization.UI.SettingsMenu::InitData
+Tape2Tape.Customization.UI.SkaterCustomizationMenu::InitData
+Tape2Tape.Customization.UI.SkaterListMenu::InitData
+Tape2Tape.Customization.UI.TeamCustomizationMenu::InitData
+Tape2Tape.Customization.UI.TeamListMenu::InitData
+Tape2Tape.Customization.UI.TeamsBecameInvalidPrompt::InitData

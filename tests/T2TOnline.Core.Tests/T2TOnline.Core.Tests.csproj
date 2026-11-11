@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- net6.0 is the runtime Core runs on in the game (MelonLoader's .NET 6.0.36), so the tests run there too. -->
+    <TargetFrameworks>net8.0;net6.0</TargetFrameworks>
+    <IsTestProject>true</IsTestProject>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>T2TOnline.Core.Tests</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\T2TOnline.Core\T2TOnline.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- The native lobby's parts list: the list itself is checked to parse. -->
+    <None Include="..\..\src\T2TOnline.Plugin\Hooks\ui_parts.txt" Link="ui_parts.txt" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- The hook lists, and the plugin's own parsers for them (both are plain .NET; the plugin reads them at start-up and a
+         bad line there turns online off): HookListsTests reads the real files with the real code. -->
+    <None Include="..\..\src\T2TOnline.Plugin\Hooks\*.txt" Exclude="..\..\src\T2TOnline.Plugin\Hooks\ui_parts.txt" Link="hooks\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <Compile Include="..\..\src\T2TOnline.Plugin\Hooks\HookManifest.cs" Link="Hooks\Linked\HookManifest.cs" />
+    <Compile Include="..\..\src\T2TOnline.Plugin\Client\ClientModeList.cs" Link="Hooks\Linked\ClientModeList.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- The install check's rules (plain .NET: the plugin runs them before it may touch Core): InstallLayoutTests checks every
+         case on an in-memory folder tree with the real code. -->
+    <Compile Include="..\..\src\T2TOnline.Plugin\Startup\InstallLayout.cs" Link="Startup\Linked\InstallLayout.cs" />
+    <!-- Unity's crash reporter's switch-off (plain .NET: it runs on a mixed install too): checked with a fake engine. -->
+    <Compile Include="..\..\src\T2TOnline.Plugin\Startup\CrashReporterSwitches.cs" Link="Startup\Linked\CrashReporterSwitches.cs" />
+    <Compile Include="..\..\src\T2TOnline.Plugin\Startup\RipRelativeLoad.cs" Link="Startup\Linked\RipRelativeLoad.cs" />
+  </ItemGroup>
+</Project>

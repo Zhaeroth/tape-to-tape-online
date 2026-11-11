@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question or install help
+    url: https://github.com/Zhaeroth/tape-to-tape-online/discussions/categories/q-a
+    about: Ask in Discussions (Q&A) how to install, set up or play. Use the bug report form for something that went wrong.
+  - name: Security vulnerability
+    url: https://github.com/Zhaeroth/tape-to-tape-online/security/policy
+    about: Report a security problem privately, as the security policy describes. Don't open a public issue.

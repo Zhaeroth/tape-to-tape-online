@@ -1,0 +1,45 @@
+# Build output
+bin/
+obj/
+artifacts/
+TestResults/
+*.user
+*.suo
+.vs/
+.idea/
+.vscode/
+*.swp
+
+# Game-derived files never enter the repository: interop assemblies, decompiled
+# listings, logs, stream recordings, saves and save backups stay on the developer's PC.
+lib/game/
+dumps/
+*.t2tstream
+*.t2tsnap
+*.names.txt
+*.log
+*.es3
+*.bac
+save_backups/
+UserData/
+ui-check/
+
+# Local overrides and secrets (Directory.Build.local.props.example is the committed template)
+Directory.Build.local.props
+*.local.props
+.env
+
+# Assistant and editor tooling, and personal notes
+.claude/
+CLAUDE*.md
+
+# Private working folders: reverse-engineering notes and extra git worktrees
+research
+worktrees/
+
+# Packages built by tools/package (include MelonLoader binaries)
+dist/
+
+# Python bytecode
+__pycache__/
+*.pyc

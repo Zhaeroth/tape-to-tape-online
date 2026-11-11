@@ -1,0 +1,60 @@
+# rowuse's allow file: what the check can't decide by its rules (tools/checks/rowuse/Analysis.cs), each with its reason.
+#
+# The rules (no entry needed): a use of a property's compiler-made backing field (the interop's _Name_k__BackingField) is a
+# use of the property's row; the interop's own glue (Il2CppSystem.Object GetIl2CppType and op_Implicit) needs no row; a row
+# is used when a string literal of the plugin, Core or the Steam library names its member (a Harmony patch by name, nameof,
+# an icall as 'Type::get_Name', the backing field by '<Name>k__BackingField'), when it is a member of an enum the plugin
+# names (an enum value is a constant in the code, so no member reference shows it), or when clientmode.txt or
+# presentation.txt lists it too (the plugin reads those lists as data at run time; a hand-picked row beside the generated
+# list is kept on purpose). A constructor row ('Type::.ctor') is the exception to the string rule: it is used only when the
+# built plugin constructs that type (a constructor reference to it), never by a string literal, because one literal ".ctor"
+# would name every constructor row at once. A type made some other way (reflection, the game's own CreateInstance or
+# AddComponent by a type) has no constructor reference: its row is listed here, saying how it is made. Only hooks.txt and
+# menus_initdata.txt rows must be used; clientmode.txt and presentation.txt rows are read as a list by the plugin.
+#
+# Entries: 'row <Type::Member> | <reason>' keeps a row nothing in the plugin names; 'use <Type::Member> | <reason>' lets the
+# plugin use a game member that has no row. An entry that no longer applies fails the check (remove it), so this file only
+# shrinks with the code.
+
+# Own skater (v2, v3): the entry points the next stage patches, listed so that every game build is checked for them (present
+# and not folded) before that work starts (the list's own header says so).
+row Skaters.Forward::Pass | own-skater stage entry point, checked on each game build before that stage patches it
+row Skaters.Forward::WristShot | own-skater stage entry point, checked on each game build before that stage patches it
+row Skaters.Forward::SlapShot | own-skater stage entry point, checked on each game build before that stage patches it
+row Skaters.Forward::Bodycheck | own-skater stage entry point, checked on each game build before that stage patches it
+row Skaters.Forward::Pokecheck | own-skater stage entry point, checked on each game build before that stage patches it
+row Skaters.Forward::Punch | own-skater stage entry point, checked on each game build before that stage patches it
+row Skaters.Forward::PickupPuck | own-skater stage entry point, checked on each game build before that stage patches it
+row Skaters.Forward::Knockout | own-skater stage entry point, checked on each game build before that stage patches it
+row Skaters.Forward::Staggered | own-skater stage entry point, checked on each game build before that stage patches it
+row Skaters.Forward::TryGetDrawnBladePosition | own-skater stage entry point, checked on each game build before that stage patches it
+row Skaters.Forward::puckAttachment | own-skater stage entry point, checked on each game build before that stage patches it
+row Tape2Tape.Puck::PredictPositionXZ | own-skater stage entry point, checked on each game build before that stage patches it
+
+# The collision structs' fields: Streaming/CompoundValues.cs writes a friend's collision byte by byte at fixed offsets of
+# this build's layout; the rows make the start-up check and hookcheck prove each field still exists, so a game update that
+# renames or removes one is noticed.
+row UnityEngine.ContactPairHeader::m_BodyID | written at a fixed offset (CompoundValues); the row proves the field exists on the build
+row UnityEngine.ContactPairHeader::m_OtherBodyID | written at a fixed offset (CompoundValues); the row proves the field exists on the build
+row UnityEngine.ContactPairHeader::m_NbPairs | written at a fixed offset (CompoundValues); the row proves the field exists on the build
+row UnityEngine.ContactPair::m_OtherColliderID | written at a fixed offset (CompoundValues); the row proves the field exists on the build
+row UnityEngine.ContactPair::m_NbPoints | written at a fixed offset (CompoundValues); the row proves the field exists on the build
+
+# Listed so every game build is checked for a method a guard reasons about: the friend's own Settings menu refuses every
+# click under the System tab's object (Input/OwnSettingsMenu.Owns, which finds the tab by this class) because that tab's
+# buttons delete saves and reset unlocks. If an update moved Delete Saves to another class, this row would fail on that
+# build (online stays off there) until the guard is judged again.
+row Tape2Tape.Customization.UI.SystemSettingsUI::OnDeleteSaves | never called: the check that the System tab's class still handles Delete Saves (its Start puts this on its m_DeleteSaves button), which the friend's Settings guard refuses that tab's clicks for
+
+# Constructor rows with no constructor reference in the plugin (see the rules above): each type is made another way, or is
+# listed only so every game build is checked for it.
+row Rogue.TieDomi::.ctor | the type only, never constructed: listed so each game build is checked for Tied Homie, whose relic on a team changes the match's winner rule (the plugin reads it, MatchWinRules)
+row Rogue.Relics.FinalSquadRelics.SpeedrunCurse::.ctor | the type only, never constructed: listed so each game build is checked for the speedrun curse, which on the home team makes the goal target the winner rule (MatchWinRules)
+row Stats.PersistentStats.SkaterStatDefinition::.ctor | made by reflection, Activator.CreateInstance(type) in ProgressEntityStats (the class's own constructor makes the lists the game's Combine adds into): no constructor reference shows it
+row Stats.PersistentStats.GoalieStatDefinition::.ctor | made by reflection, Activator.CreateInstance(type) in ProgressEntityStats: no constructor reference shows it
+row Stats.PersistentStats.TeamStatDefinition::.ctor | made by reflection, Activator.CreateInstance(type) in ProgressEntityStats: no constructor reference shows it
+row Stats.PersistentStats.TalentStatDefinition::.ctor | made by reflection, Activator.CreateInstance(type) in ProgressEntityStats: no constructor reference shows it
+row Stats.PersistentStats.AbilityStatDefinition::.ctor | made by reflection, Activator.CreateInstance(type) in ProgressEntityStats: no constructor reference shows it
+row Stats.PersistentStats.RelicStatDefinition::.ctor | made by reflection, Activator.CreateInstance(type) in ProgressEntityStats: no constructor reference shows it
+row Tape2Tape.Customization.UI.T2TMenuDefinition::.ctor | made by the game's own ScriptableObject.CreateInstance(Il2CppType.Of<T2TMenuDefinition>()) in LobbyShell: the game runs the constructor, so no constructor reference shows it
+row Tape2Tape.Customization.UI.DismissablePromptMenu::.ctor | added by the game's own GameObject.AddComponent(Il2CppType.Of<DismissablePromptMenu>()) in LobbyShell: the game runs the constructor, so no constructor reference shows it
