@@ -28,7 +28,7 @@ jobs:
         with:
           global-json-file: global.json
           dotnet-version: 6.0.x
-      - name: Restore (locked: packages.lock.json must be current)
+      - name: Restore in locked mode (packages.lock.json must be current)
         run: |
           dotnet restore tests/T2TOnline.Core.Tests --locked-mode
           dotnet restore tests/T2TOnline.Steam.Tests --locked-mode
