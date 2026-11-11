@@ -7,6 +7,11 @@ version.
 
 ## [Unreleased]
 
+## [0.12.2-beta] - 2026-11-11 (protocol 9)
+
+The first public release: 0.12.0 Beta with its texts and documents made ready for the public (0.12.0 and 0.12.1 were
+not published). Nothing a player does changes, and the protocol is still 9.
+
 ### Changed
 - The notice for a player on another release of the same protocol says to install the same release (the host's). It
   told players to pass the zip on.

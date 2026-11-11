@@ -14,7 +14,7 @@
     <Company>T2T Online</Company>
     <Product>T2T Online</Product>
     <Copyright>Copyright (c) 2026 Zhaeroth</Copyright>
-    <VersionPrefix>0.12.0</VersionPrefix>
+    <VersionPrefix>0.12.2</VersionPrefix>
     <VersionSuffix>beta</VersionSuffix>
     <!-- The game runs MelonLoader's .NET 6 runtime, so everything that loads into it targets net6.0. -->
     <T2TModTargetFramework>net6.0</T2TModTargetFramework>
