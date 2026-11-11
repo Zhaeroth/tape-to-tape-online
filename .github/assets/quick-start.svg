@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="250" viewBox="0 0 1280 250" role="img" aria-label="Quick start: install MelonLoader 0.7.3, extract T2T Online into the game folder, then choose Online on the title screen to host or join">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d1930"/><stop offset="1" stop-color="#0a1324"/></linearGradient>
+<filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.05 0"/></filter>
+<linearGradient id="tape" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6f2e8"/><stop offset="1" stop-color="#e2dbca"/></linearGradient>
+<filter id="lift" x="-10%" y="-40%" width="120%" height="200%"><feDropShadow dx="0" dy="2" stdDeviation="2.2" flood-color="#000000" flood-opacity="0.45"/></filter>
+<marker id="pass" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 1 L 9 5 L 0 9 z" fill="#c9d6ea"/></marker>
+<marker id="shot" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 1 L 9 5 L 0 9 z" fill="#f2b84b"/></marker>
+<clipPath id="frame"><rect width="1280" height="250" rx="16"/></clipPath>
+</defs>
+<g clip-path="url(#frame)"><rect width="1280" height="250" fill="url(#bg)"/><rect width="1280" height="250" filter="url(#grain)"/></g>
+<rect x="0.5" y="0.5" width="1279" height="249" rx="16" fill="none" stroke="#ffffff" stroke-opacity="0.08"/>
+<rect x="56.0" y="48" width="358.7" height="154" rx="14" fill="#ffffff" fill-opacity="0.04" stroke="#c9d6ea" stroke-opacity="0.28"/>
+<circle cx="100.0" cy="94.0" r="20.0" fill="#5b9cff"/>
+<text x="100.0" y="101.6" text-anchor="middle" font-family="'Segoe UI Variable Display', 'Segoe UI', system-ui, -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="22.0" font-weight="700" fill="#0a1324">1</text>
+<text x="134.0" y="102" font-family="'Segoe UI Variable Display', 'Segoe UI', system-ui, -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="23" font-weight="700" fill="#ffffff">Install MelonLoader</text>
+<text x="82.0" y="148" font-family="'Segoe UI Variable Display', 'Segoe UI', system-ui, -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="17" fill="#b3c0d6">The free mod loader (0.7.3),</text>
+<text x="82.0" y="173" font-family="'Segoe UI Variable Display', 'Segoe UI', system-ui, -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="17" fill="#b3c0d6">from its official release.</text>
+<line x1="423.7" y1="125.0" x2="449.7" y2="125.0" stroke="#f2b84b" stroke-width="2.8" stroke-linecap="round" marker-end="url(#shot)"/>
+<rect x="460.7" y="48" width="358.7" height="154" rx="14" fill="#ffffff" fill-opacity="0.04" stroke="#c9d6ea" stroke-opacity="0.28"/>
+<circle cx="504.7" cy="94.0" r="20.0" fill="#ff6b6b"/>
+<text x="504.7" y="101.6" text-anchor="middle" font-family="'Segoe UI Variable Display', 'Segoe UI', system-ui, -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="22.0" font-weight="700" fill="#0a1324">2</text>
+<text x="538.7" y="102" font-family="'Segoe UI Variable Display', 'Segoe UI', system-ui, -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="23" font-weight="700" fill="#ffffff">Extract T2T Online</text>
+<text x="486.7" y="148" font-family="'Segoe UI Variable Display', 'Segoe UI', system-ui, -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="17" fill="#b3c0d6">Unzip the release into</text>
+<text x="486.7" y="173" font-family="'Segoe UI Variable Display', 'Segoe UI', system-ui, -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="17" fill="#b3c0d6">your Tape to Tape folder.</text>
+<line x1="828.3" y1="125.0" x2="854.3" y2="125.0" stroke="#f2b84b" stroke-width="2.8" stroke-linecap="round" marker-end="url(#shot)"/>
+<rect x="865.3" y="48" width="358.7" height="154" rx="14" fill="#ffffff" fill-opacity="0.04" stroke="#c9d6ea" stroke-opacity="0.28"/>
+<circle cx="909.3" cy="94.0" r="20.0" fill="#43c486"/>
+<text x="909.3" y="101.6" text-anchor="middle" font-family="'Segoe UI Variable Display', 'Segoe UI', system-ui, -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="22.0" font-weight="700" fill="#0a1324">3</text>
+<text x="943.3" y="102" font-family="'Segoe UI Variable Display', 'Segoe UI', system-ui, -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="23" font-weight="700" fill="#ffffff">Choose Online</text>
+<text x="891.3" y="148" font-family="'Segoe UI Variable Display', 'Segoe UI', system-ui, -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="17" fill="#b3c0d6">Host a lobby or join a friend,</text>
+<text x="891.3" y="173" font-family="'Segoe UI Variable Display', 'Segoe UI', system-ui, -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="17" fill="#b3c0d6">right on the title screen.</text>
+</svg>
