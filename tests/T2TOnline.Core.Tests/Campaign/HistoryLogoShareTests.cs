@@ -4,7 +4,7 @@ using T2TOnline.Core.Stream;
 
 namespace T2TOnline.Core.Tests.Campaign;
 
-/// <summary>A host's old run history page from a custom-logo run shows the real logo on a friend (v1).</summary>
+/// <summary>A host's old run history page from a custom-logo run shows the real logo on a friend.</summary>
 public class HistoryLogoShareTests
 {
     private const long Second = 1_000_000;

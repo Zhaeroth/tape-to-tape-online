@@ -50,7 +50,7 @@ public class UiCheckTourTests
         Assert.Same(UiCheckPlan.PadWalk, UiCheckRequest.Find(UiCheckPlan.Tours, "padwalk")!.Steps);
         Assert.Same(UiCheckPlan.OnePc, UiCheckRequest.Find(UiCheckPlan.Tours, "onepc")!.Steps);
         Assert.Same(UiCheckPlan.KbWalk, UiCheckRequest.Find(UiCheckPlan.Tours, "kbwalk")!.Steps);
-        Assert.Null(UiCheckRequest.Find(UiCheckPlan.Tours, "spike"));
+        Assert.Null(UiCheckRequest.Find(UiCheckPlan.Tours, "nosuchtour"));
     }
 
     [Fact]

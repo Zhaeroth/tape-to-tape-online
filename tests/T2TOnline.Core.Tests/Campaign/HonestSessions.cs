@@ -6,10 +6,10 @@ namespace T2TOnline.Core.Tests.Campaign;
 /// where <see cref="T2TOnline.Core.Campaign.StatBounds.SecondsPerMatch"/> of it have played here:
 /// <see cref="T2TOnline.Core.Campaign.MatchPlayCounter"/>), "b &lt;stat&gt;:&lt;value&gt; ..." for a
 /// batch the host's game credited (by the game's <c>StatType</c> number: an amount added or taken off, "=n" a record
-/// raised to n, "reset" the win streak's reset). The long one is a campaign run through three acts (nine matches over about
-/// two hours, with a drop, a rejoin and a restart between); the short one an exhibition and four campaign matches.
+/// raised to n, "reset" the win streak's reset). The long one is a campaign run through three acts (nine matches, with a drop, a rejoin and
+/// a restart between); the short one an exhibition and four campaign matches.
 /// </summary>
-internal static class HonestNights
+internal static class HonestSessions
 {
     /// <summary>The long session: nine matches, two runs, about 100 minutes of the host's run held here.</summary>
     public static readonly string[] Long =

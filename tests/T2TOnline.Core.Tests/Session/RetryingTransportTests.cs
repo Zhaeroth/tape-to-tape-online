@@ -17,7 +17,7 @@ public class RetryingTransportTests
     private const ulong FriendId = 200;
     private const ulong OtherId = 300;
     private const long Ms = 1000;
-    private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.6.0-m4", 0x1122334455667788);
+    private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.6.0-rc", 0x1122334455667788);
 
     [Fact]
     public void A_refused_reliable_send_is_kept_and_goes_out_first_on_the_next_flush()

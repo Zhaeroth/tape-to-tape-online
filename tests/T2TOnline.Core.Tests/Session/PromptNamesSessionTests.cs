@@ -18,7 +18,7 @@ public class PromptNamesSessionTests
     private const ulong FriendId = 200;
     private const long Ms = 1000;
     private const long Second = 1_000_000;
-    private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.8.0-v1", 0x1122334455667788);
+    private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.8.0-rc", 0x1122334455667788);
 
     [Fact]
     public void Names_set_before_the_welcome_go_right_after_it_after_the_controls()

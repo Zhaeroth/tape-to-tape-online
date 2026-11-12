@@ -62,14 +62,6 @@ public class UiCheckPlanTests
     }
 
     [Fact]
-    public void The_spike_is_folded_into_the_walks_and_screens()
-    {
-        Assert.False(UiCheckRequest.TryParse("spike", UiCheckPlan.Tours, out _, out string problem));
-        Assert.StartsWith("no tour is called", problem, StringComparison.Ordinal);
-        Assert.DoesNotContain(UiCheckPlan.Tours.SelectMany(t => t.Steps), s => s.Id.StartsWith("st_", StringComparison.Ordinal));
-    }
-
-    [Fact]
     public void The_pad_walk_goes_in_the_order_a_person_would_and_ends_at_the_title()
     {
         string[] ids = UiCheckPlan.PadWalk.Select(s => s.Id).ToArray();

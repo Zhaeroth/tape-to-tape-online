@@ -24,7 +24,7 @@ public class CampaignFuzzTests
     private const ulong HostId = 100;
     private const ulong FriendId = 200;
     private const long Ms = 1000;
-    private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.6.0-m4", 0x1122334455667788);
+    private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.6.0-rc", 0x1122334455667788);
 
     private static KeyValuePair<string, NetValue> V(string key, NetValue value) => new(key, value);
 

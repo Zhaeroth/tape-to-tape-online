@@ -43,7 +43,7 @@ public class OfflineStartTests
     [InlineData("offline reason=Steam")]
     [InlineData("offline seed=3")]
     [InlineData("offline reason=steam reason=error")]
-    [InlineData("spike")]
+    [InlineData("nosuchtour")]
     [InlineData("selfdrive reason=steam")]
     [InlineData("all")]
     public void Any_other_line_starts_nothing(string? line)

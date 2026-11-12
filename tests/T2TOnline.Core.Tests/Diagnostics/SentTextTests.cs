@@ -7,9 +7,9 @@ public class SentTextTests
 {
     [Theory]
     [InlineData("0.12.0-beta")]
-    [InlineData("0.9.0-m4")]
+    [InlineData("0.9.0-rc")]
     [InlineData("1.0.0")]
-    [InlineData("0.12.0-beta+3c337e6f")]
+    [InlineData("0.12.0-beta+0a1b2c3d")]
     public void A_release_is_written_as_it_is(string release) => Assert.Equal(release, SentText.Release(release));
 
     [Theory]

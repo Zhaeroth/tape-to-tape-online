@@ -15,7 +15,7 @@ public class CampaignLinkTests
     private const ulong FriendA = 200;
     private const ulong FriendB = 300;
     private const long Ms = 1000;
-    private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.6.0-m4", 0x1122334455667788);
+    private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.6.0-rc", 0x1122334455667788);
 
     private static Dictionary<RunCheckpointPart, byte[]> Run(string text) => new()
     {

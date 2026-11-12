@@ -34,7 +34,7 @@ public class PromptDataTests
     };
 
     /// <summary>
-    /// The customization menus' "can't delete this skater" notice (v1): a title and a button that are terms, and a
+    /// The customization menus' "can't delete this skater" notice: a title and a button that are terms, and a
     /// description the game formats from a term and the skater's name, which a friend's game makes again in its own language.
     /// </summary>
     public static PromptData WithRecipe() => new()

@@ -7,7 +7,7 @@ using T2TOnline.Core.Serialization;
 namespace T2TOnline.Core.Tests.Campaign;
 
 /// <summary>
-/// The four text ops the toasts' and formatted prompts' recipes add (v1): a team's display name, a relic's,
+/// The four text ops the toasts' and formatted prompts' recipes add: a team's display name, a relic's,
 /// talent's or ability's name by id and level, an injury's name and a stat's keyword-tagged name. Made by
 /// <see cref="IToastTextFunctions"/>; a PC whose functions lack it makes none of them.
 /// </summary>

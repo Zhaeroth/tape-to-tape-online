@@ -26,7 +26,7 @@ public class PlayBoundTests
     private static StatEntry Record(int stat, int value) => new(stat, StatOp.TrySetLargerCampaign, StatValue.Whole(value));
 
     /// <summary>
-    /// Plays <paramref name="timeline"/> (<see cref="HonestNights"/>) into the ledger and the credit, its time running on with
+    /// Plays <paramref name="timeline"/> (<see cref="HonestSessions"/>) into the ledger and the credit, its time running on with
     /// the play; returns the operations refused, and the largest share of a bound any stat used.
     /// </summary>
     private static (int Refused, double Share, string Tightest) Replay(IEnumerable<string> timeline, ProgressLedger ledger, ProgressCredit credit, ref DateTime now)
@@ -80,7 +80,7 @@ public class PlayBoundTests
     public void An_honest_long_session_passes_every_operation_with_room()
     {
         DateTime now = Evening;
-        (int refused, double share, string tightest) = Replay(HonestNights.Long, new ProgressLedger(), new ProgressCredit(), ref now);
+        (int refused, double share, string tightest) = Replay(HonestSessions.Long, new ProgressLedger(), new ProgressCredit(), ref now);
         Assert.Equal(0, refused);
         Assert.True(share < 0.6, tightest); // the tightest is games played: ten credited (one for a match missed in a drop) of 21
     }
@@ -89,7 +89,7 @@ public class PlayBoundTests
     public void An_honest_short_session_passes_every_operation_with_room()
     {
         DateTime now = Evening;
-        (int refused, double share, string tightest) = Replay(HonestNights.Short, new ProgressLedger(), new ProgressCredit(), ref now);
+        (int refused, double share, string tightest) = Replay(HonestSessions.Short, new ProgressLedger(), new ProgressCredit(), ref now);
         Assert.Equal(0, refused);
         Assert.True(share < 0.6, tightest);
     }
@@ -105,7 +105,7 @@ public class PlayBoundTests
         string tightest = string.Empty;
         for (int run = 0; run < 4; run++)
         {
-            (int r, double s, string t) = Replay(HonestNights.Long, ledger, credit, ref now);
+            (int r, double s, string t) = Replay(HonestSessions.Long, ledger, credit, ref now);
             refused += r;
             (share, tightest) = s > share ? (s, t) : (share, tightest);
         }

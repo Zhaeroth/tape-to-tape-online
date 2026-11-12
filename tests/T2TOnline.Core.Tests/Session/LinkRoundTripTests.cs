@@ -17,7 +17,7 @@ public class LinkRoundTripTests
     [Fact]
     public void The_sessions_round_trips_outlive_the_reports_window()
     {
-        var identity = new SessionIdentity(ProtocolInfo.Version, "0.8.0-v1", 0x1122334455667788);
+        var identity = new SessionIdentity(ProtocolInfo.Version, "0.8.0-rc", 0x1122334455667788);
         var net = new FakeNetwork { LatencyMicros = 20 * Ms };
         var host = new HostSession(identity, net.For(HostId));
         host.SetMembers(new[] { HostId, FriendId });

@@ -19,7 +19,7 @@ public class PadDeviceTests
     private const byte Xbox = 1;
     private const byte PlayStation = 2;
     private const byte Nintendo = 3;
-    private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.7.0-v1", 0x1122334455667788);
+    private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.7.0-rc", 0x1122334455667788);
 
     [Fact]
     public void The_host_knows_the_family_from_the_hello()

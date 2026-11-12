@@ -167,7 +167,7 @@ public class SteamLobbyBrowserTests
 
     private static (string, string)[] Hosted(ulong host = Alex, string players = "2", string state = "lobby", string mode = "campaign", string save = "Tchelios,2,14", string pingloc = "ord=70") => new[]
     {
-        (LobbyDataKeys.Mod, "0.9.0-m4"),
+        (LobbyDataKeys.Mod, "0.9.0-rc"),
         (LobbyDataKeys.Protocol, "7"),
         (LobbyDataKeys.Build, "abc123"),
         (LobbyDataKeys.Host, host.ToString(System.Globalization.CultureInfo.InvariantCulture)),
@@ -229,7 +229,7 @@ public class SteamLobbyBrowserTests
         Assert.Equal(ListingAnswer.Answered, answered.Answer);
         Assert.Equal(Alex, answered.HostId);
         Assert.Equal("Alex", answered.HostName);
-        Assert.Equal("0.9.0-m4", answered.ModVersion);
+        Assert.Equal("0.9.0-rc", answered.ModVersion);
         Assert.Equal("7", answered.Protocol);
         Assert.Equal("abc123", answered.Build);
         Assert.Equal(2, answered.Players);
@@ -356,7 +356,7 @@ public class SteamLobbyBrowserTests
     public void A_lobby_that_names_no_host_is_listed_as_it_is_so_its_version_can_be_explained()
     {
         var h = new Harness();
-        h.Steam.PlayingIn(Sam, "Sam", LobbyA).Lobby(LobbyA, (LobbyDataKeys.Mod, "0.7.3-m4"), (LobbyDataKeys.Protocol, "5"), (LobbyDataKeys.Build, "abc123"));
+        h.Steam.PlayingIn(Sam, "Sam", LobbyA).Lobby(LobbyA, (LobbyDataKeys.Mod, "0.7.3-rc"), (LobbyDataKeys.Protocol, "5"), (LobbyDataKeys.Build, "abc123"));
 
         h.Run(TimeSpan.FromSeconds(3));
 
@@ -426,7 +426,7 @@ public class SteamLobbyBrowserTests
         Assert.Contains("save (11 character(s), not as T2T Online writes it) act 2 floor 14", strange, StringComparison.Ordinal);
 
         string plain = Assert.Single(h.Info, line => line.Contains(" answered: ", StringComparison.Ordinal) && line.Contains("protocol \"7\"", StringComparison.Ordinal));
-        Assert.Contains("T2T Online \"0.9.0-m4\", protocol \"7\", build \"abc123\"", plain, StringComparison.Ordinal);
+        Assert.Contains("T2T Online \"0.9.0-rc\", protocol \"7\", build \"abc123\"", plain, StringComparison.Ordinal);
         Assert.Contains("save \"tchel\" act 3 floor 7", plain, StringComparison.Ordinal);
     }
 

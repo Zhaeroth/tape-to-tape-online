@@ -16,7 +16,7 @@ public class LobbySessionTests
     private const ulong SecondId = 300;
     private const long Ms = 1000;
     private const long Second = 1_000_000;
-    private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.9.0-m4", 0x1122334455667788);
+    private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.9.0-rc", 0x1122334455667788);
 
     private static LobbyBoardMessage Board(uint epoch = 1) => LobbyMessagesTests.Sample() with { Epoch = epoch };
 

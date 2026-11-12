@@ -274,7 +274,7 @@ public class WireLayoutTests
         // step (a refused move's bump on player 2's icon).
         ["menu.controller-screen"] = () => Write(w => Assert.True(MenuMessages.Write(w, MenuEvent.Opened(ControllerScreen())))),
         ["menu.controller-feedback"] = () => Write(w => Assert.True(MenuMessages.Write(w, MenuEvent.ValueSet(3, MenuTarget.AtItem(ControllerFeedback.Group, 1), Feedback())))),
-        // Another player's own button names for their icon (v1): a pad player's, a keyboard player's with modifier
+        // Another player's own button names for their icon: a pad player's, a keyboard player's with modifier
         // keys, and one with a button nothing is bound to, as rows of the controller screen's data.
         ["menu.controller-glyphs"] = () => Write(w => Assert.True(MenuMessages.Write(w, MenuEvent.Opened(ControllerGlyphsState())))),
         // The in-match menu's numbers (GameMenuModel format 3: the injury list's rows) and the glossary's values (its row's
@@ -319,7 +319,7 @@ public class WireLayoutTests
                 recipe.Write(w);
             }
         }),
-        // The toast and prompt recipes' ops (v1): a recipe of each, and the formats around them.
+        // The toast and prompt recipes' ops: a recipe of each, and the formats around them.
         ["campaign.toast-recipes"] = () => Write(w =>
         {
             foreach (TextRecipe recipe in TextRecipeTests.EveryToastOp())
@@ -344,7 +344,7 @@ public class WireLayoutTests
         // custom content item's bytes).
         ["attachment.run-preview"] = () => Write(w => RunPreviewSetTests.SuperStarPick().Write(w)),
         ["attachment.run-preview-old-school"] = () => Write(w => RunPreviewSetTests.OldSchool().Write(w)),
-        // The lineup with benchwarmers (format 2, added after v0.7.1-m4 under protocol 5: format 1's fields, then the pool).
+        // The lineup with benchwarmers (format 2, added under protocol 5: format 1's fields, then the pool).
         ["attachment.run-preview-lineup"] = () => Write(w => RunPreviewSetTests.Lineup().Write(w)),
 
         // The title's screens on a friend: the unlockables' states (kind 6), a run history page (kind
@@ -379,7 +379,7 @@ public class WireLayoutTests
         ["attachment.nurse-unavailable"] = () => Write(w => NurseRosterData.Unavailable("no roster").Write(w)),
         ["attachment.nurse-steps"] = () => Write(w => NurseStepsTests.Sample().Write(w)),
 
-        // Play Now's controller screen (attachment kind 11, v1): what its teams need of the host's custom content, and its
+        // Play Now's controller screen (attachment kind 11): what its teams need of the host's custom content, and its
         // settings and teams as menu values of an open menu.
         ["attachment.controller-content"] = () => Write(w => ControllerExhibitionTests.Content().Write(w)),
         ["menu.controller-exhibition"] = () => Write(w => Assert.True(MenuMessages.Write(w, MenuEvent.Opened(new MenuState(4, "ControllerAssignment", "ControllerAssignmentMenu", "start_screen", 1,

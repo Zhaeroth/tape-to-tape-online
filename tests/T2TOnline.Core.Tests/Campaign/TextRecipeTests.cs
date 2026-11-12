@@ -120,7 +120,7 @@ public class TextRecipeTests
         TextRecipe.Format(TextRecipe.Literal("{0}")),
     };
 
-    /// <summary>One recipe of each of the toast and prompt ops (v1), alone and in the formats the game's makers use
+    /// <summary>One recipe of each of the toast and prompt ops, alone and in the formats the game's makers use
     /// around them.</summary>
     public static IEnumerable<TextRecipe> EveryToastOp() => new[]
     {

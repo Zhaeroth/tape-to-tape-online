@@ -9,8 +9,8 @@ public class SettingsTextTests
 {
     /// <summary>A shared file as MelonLoader 0.7.3 writes it (Tomlet: the description as a comment, keys bare).</summary>
     private const string SharedFile =
-        "[OtherMod]\n# Another mod's setting.\nSpeed = 7\n\n[T2TOnline]\n# M0 test: one-way delay.\nLoopbackDelayMs = 0\n" +
-        "# M0 test: measure the game's replay snapshots during matches.\nSnapshotProbe = true\nCoopSlot = 3\nOnlineInput = \"Auto\"\n";
+        "[OtherMod]\n# Another mod's setting.\nSpeed = 7\n\n[T2TOnline]\n# Developer: one-way delay.\nLoopbackDelayMs = 0\n" +
+        "# Developer: measure the game's replay snapshots during matches.\nSnapshotProbe = true\nCoopSlot = 3\nOnlineInput = \"Auto\"\n";
 
     [Theory]
     [InlineData(SharedFile, true)]

@@ -10,7 +10,7 @@ public class BrowserRowsTests
     private static readonly BrowserIdentity Us = new(7, "abc");
 
     private static LobbyListing Listing(ulong lobby, string host, int players = 2, int max = 4, int protocol = 7, string build = "abc", bool details = true, long age = 0, ulong? hostId = null,
-        ListingState state = ListingState.InLobby, bool invited = false, int ping = -1, string mod = "0.9.0-m4") => new()
+        ListingState state = ListingState.InLobby, bool invited = false, int ping = -1, string mod = "0.9.0-rc") => new()
     {
         LobbyId = lobby,
         HostId = hostId ?? lobby + 1000,

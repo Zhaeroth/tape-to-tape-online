@@ -21,7 +21,7 @@ public class KeyboardSessionTests
     private const long Ms = 1000;
     private const long Second = 1_000_000;
     private const long Frame240 = Second / 240;
-    private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.7.0-v1", 0x1122334455667788);
+    private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.7.0-rc", 0x1122334455667788);
 
     [Fact]
     public void A_keyboard_friend_joins_and_its_controls_reach_the_host()

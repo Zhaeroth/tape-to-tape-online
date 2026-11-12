@@ -8,7 +8,7 @@ using T2TOnline.Core.Serialization;
 
 namespace T2TOnline.Core.Tests.Campaign;
 
-/// <summary>Another player's own button names on their controller screen icon (v1).</summary>
+/// <summary>Another player's own button names on their controller screen icon.</summary>
 public class ControllerGlyphsTests
 {
     private static readonly int[] Actions = { 33, 32, 45 }; // (this build's ids: the position lock, colour and jersey buttons)

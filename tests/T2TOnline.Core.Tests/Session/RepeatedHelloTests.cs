@@ -13,7 +13,7 @@ public class RepeatedHelloTests
     private const ulong FriendId = 200;
     private const ulong Build = 0x1122334455667788;
     private const long Second = 1_000_000;
-    private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.6.0-m4", Build);
+    private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.6.0-rc", Build);
 
     [Theory]
     [InlineData((byte)3, Build, InputKind.Gamepad, RejectReason.ProtocolMismatch)]

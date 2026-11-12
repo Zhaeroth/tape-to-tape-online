@@ -139,18 +139,18 @@ public class SteamLobbyListingTests
     }
 
     [Theory]
-    [InlineData("0.9.0-m4", "7", "abc123", ListedCompat.Compatible)]
-    [InlineData("0.9.0-m4", "7", "ABC123", ListedCompat.Compatible)]
-    [InlineData("0.9.1-m4", "7", "abc123", ListedCompat.Compatible)] // another release of the same protocol
+    [InlineData("0.9.0-rc", "7", "abc123", ListedCompat.Compatible)]
+    [InlineData("0.9.0-rc", "7", "ABC123", ListedCompat.Compatible)]
+    [InlineData("0.9.1-rc", "7", "abc123", ListedCompat.Compatible)] // another release of the same protocol
     [InlineData("", "7", "abc123", ListedCompat.NotT2TOnline)]
     [InlineData(null, null, null, ListedCompat.NotT2TOnline)]
-    [InlineData("0.8.0-m4", "6", "abc123", ListedCompat.TheirsIsOlder)]
-    [InlineData("0.10.0-m4", "8", "abc123", ListedCompat.YoursIsOlder)]
-    [InlineData("0.9.0-m4", "", "abc123", ListedCompat.UnknownVersion)]
-    [InlineData("0.9.0-m4", "seven", "abc123", ListedCompat.UnknownVersion)]
-    [InlineData("0.9.0-m4", "7777777", "abc123", ListedCompat.UnknownVersion)]
-    [InlineData("0.9.0-m4", "7", "def456", ListedCompat.OtherGameBuild)]
-    [InlineData("0.9.0-m4", "7", "", ListedCompat.OtherGameBuild)]
+    [InlineData("0.8.0-rc", "6", "abc123", ListedCompat.TheirsIsOlder)]
+    [InlineData("0.10.0-rc", "8", "abc123", ListedCompat.YoursIsOlder)]
+    [InlineData("0.9.0-rc", "", "abc123", ListedCompat.UnknownVersion)]
+    [InlineData("0.9.0-rc", "seven", "abc123", ListedCompat.UnknownVersion)]
+    [InlineData("0.9.0-rc", "7777777", "abc123", ListedCompat.UnknownVersion)]
+    [InlineData("0.9.0-rc", "7", "def456", ListedCompat.OtherGameBuild)]
+    [InlineData("0.9.0-rc", "7", "", ListedCompat.OtherGameBuild)]
     public void Versions_are_judged_by_protocol_first_then_game_build(string? mod, string? protocol, string? build, ListedCompat expected)
     {
         Assert.Equal(expected, ListedLobby.CheckCompat(mod, protocol, build, 7, "abc123"));

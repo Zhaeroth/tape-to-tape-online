@@ -357,7 +357,7 @@ public class LobbyLifeTests
     {
         private const long FrameMicros = 16_000;
         private const ulong HostId = 100;
-        private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.9.0-m4", 0x1122334455667788);
+        private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.9.0-rc", 0x1122334455667788);
 
         private readonly List<ulong> _members = new() { HostId };
         private readonly Dictionary<ulong, Pc> _pcs = new();

@@ -40,7 +40,7 @@ public class NotificationCopyTests
 
     /// <summary>
     /// An injury toast as the game makes it (NotificationPusher.OnNewInjury): the title a term, the description a term formatted
-    /// with the injury's name and the other games, and custom texts of each recipe kind (v1).
+    /// with the injury's name and the other games, and custom texts of each recipe kind.
     /// </summary>
     public static NotificationCopy WithRecipes() => new()
     {

@@ -15,7 +15,7 @@ public class FloodLimitTests
     private const ulong Stranger = 300;
     private const ulong Build = 0x1122334455667788;
     private const long Second = 1_000_000;
-    private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.9.0-m4", Build);
+    private static readonly SessionIdentity Identity = new(ProtocolInfo.Version, "0.9.0-rc", Build);
 
     [Fact]
     public void First_hellos_are_looked_at_once_per_interval_per_sender()
@@ -139,7 +139,7 @@ public class FloodLimitTests
     {
         var writer = new BitWriter(64);
         new MessageHeader(MessageType.Hello, 0, 0, 0).Write(writer);
-        new HelloMessage(ProtocolInfo.Version, "0.9.0-m4", Build, InputKind.Gamepad, 0).Write(writer);
+        new HelloMessage(ProtocolInfo.Version, "0.9.0-rc", Build, InputKind.Gamepad, 0).Write(writer);
         return writer.ToArray();
     }
 

@@ -60,5 +60,5 @@ dotnet_diagnostic.CA1031.severity = suggestion
 # CA1848/CA2254: we don't use Microsoft.Extensions.Logging.
 dotnet_diagnostic.CA1848.severity = none
 dotnet_diagnostic.CA2254.severity = none
-# IDE0005 needs GenerateDocumentationFile, which is on; keep unused usings out.
+# IDE0005 needs GenerateDocumentationFile, which is on in src (the test projects turn it off); keep unused usings out.
 dotnet_diagnostic.IDE0005.severity = warning
