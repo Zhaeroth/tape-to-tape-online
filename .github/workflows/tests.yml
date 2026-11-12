@@ -1,5 +1,6 @@
-# Runs the Core and Steam tests on Windows. The plugin isn't built here: it compiles against the game's interop
-# assemblies, which only a machine with the game and MelonLoader has (docs/DEVELOPMENT.md, "Building").
+# Runs the Core and Steam tests on Windows, and the gate's checks that need nothing from the game. The plugin isn't
+# built here: it compiles against the game's interop assemblies, which only a machine with the game and MelonLoader has
+# (docs/DEVELOPMENT.md, "Building").
 # Every action is pinned by its full commit SHA (the version is in the comment); Dependabot keeps them current.
 name: tests
 
@@ -11,6 +12,11 @@ on:
 permissions:
   contents: read
 
+# A newer push to the same branch or pull request replaces a run that is still going.
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   DOTNET_CLI_TELEMETRY_OPTOUT: "1"
   DOTNET_NOLOGO: "1"
@@ -18,6 +24,7 @@ env:
 jobs:
   test:
     runs-on: windows-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -36,3 +43,18 @@ jobs:
         run: dotnet test tests/T2TOnline.Core.Tests -c Release --no-restore
       - name: Steam tests
         run: dotnet test tests/T2TOnline.Steam.Tests -c Release --no-restore
+      # The gate's checks that read only the source (docs/DEVELOPMENT.md, "The gate"). One step each, so a failure
+      # stops the job at the check that failed.
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+      - name: logcheck self-test
+        run: python -I tools/checks/logcheck.py --selftest
+      - name: logcheck (no log call writes personal data)
+        run: python -I tools/checks/logcheck.py .
+      - name: forbidden_strings self-test
+        run: python -I tools/checks/forbidden_strings.py selftest
+      - name: lobbywords_check self-test
+        run: python -I tools/checks/lobbywords_check.py --selftest
+      - name: patchinstance self-test
+        run: python -I tools/checks/patchinstance.py --selftest

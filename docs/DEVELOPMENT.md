@@ -166,7 +166,9 @@ dotnet test tests/T2TOnline.Steam.Tests -c Release
 
 The Core tests target net8.0 and net6.0, so `dotnet test` runs them twice, the second time on the runtime the game uses
 (`-f net8.0` runs one). The tests need neither the game nor any file outside the repository, so GitHub runs both
-projects on Windows for every push to `main` and every pull request (`.github/workflows/tests.yml`).
+projects on Windows for every push to `main` and every pull request (`.github/workflows/tests.yml`). The same workflow
+runs the gate's checks that read only the source: `logcheck.py` over the tree, and the self-tests of `logcheck.py`,
+`forbidden_strings.py`, `lobbywords_check.py` and `patchinstance.py`.
 
 Some tests worth knowing: `Lobby/LobbyFlowTableTests` covers every row of the lobby's flow; `Lobby/LobbyLifeTests` runs
 host and friend sessions over a fake network frame by frame; `Hooks/HookListsTests` reads the hook lists with the plugin's
