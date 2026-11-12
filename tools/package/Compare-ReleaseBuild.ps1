@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Rebuilds T2T Online.Core and T2T Online.Steam from the checked-out source and compares them, byte for byte, with the
+    Rebuilds T2TOnline.Core and T2TOnline.Steam from the checked-out source and compares them, byte for byte, with the
     ones in a release's zip.
 
 .DESCRIPTION

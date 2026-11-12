@@ -1,0 +1,44 @@
+name: Translation fix
+description: A word or sentence of the mod that reads wrongly in your language.
+labels: ["translation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The mod's text is in the game's 15 languages and has not been checked by native speakers yet, so corrections are very welcome.
+        This form is for the mod's own words (the Online menu, the lobby, the Online tab of Settings, the Backups screen, its prompts). The game's own text is not the mod's to change.
+  - type: input
+    id: language
+    attributes:
+      label: Language
+      description: The language the game is set to.
+      placeholder: for example German
+    validations:
+      required: true
+  - type: input
+    id: screen
+    attributes:
+      label: Where it shows
+      description: The screen, row or prompt.
+      placeholder: for example Settings > Online, the Share Progress row's tooltip
+    validations:
+      required: true
+  - type: textarea
+    id: now
+    attributes:
+      label: The text as it reads now
+    validations:
+      required: true
+  - type: textarea
+    id: better
+    attributes:
+      label: What it should say
+      description: The corrected text and, if it helps, a few words on why.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: T2T Online version
+      description: In the name of the zip you installed.
+      placeholder: for example 0.12.2 Beta

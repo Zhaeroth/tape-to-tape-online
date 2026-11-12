@@ -209,7 +209,8 @@ Without `-Release`, a step whose input is missing prints `SKIPPED` and says what
 required and the working tree must be clean. The gate ends with `GATE GREEN at <commit>` or the failed steps.
 
 The listing, the font metrics and the terms are derived from the game and are not distributed. `lobbywords_check.py
---make-metrics` rebuilds the font metrics from an installed game.
+--make-metrics` rebuilds the font metrics from an installed game. The maintainers run the gate with every input before
+each merge, so a contributor's run that skips these steps is enough for a pull request.
 
 ## Releases
 
@@ -253,7 +254,7 @@ DLL and PDB byte for byte (the workflow `.github/workflows/reproducible.yml` doe
 plugin compiles against the game's own interop assemblies, which only a PC with the game has, so it is not compared.
 
 **Versions.** The one version is `VersionPrefix` and `VersionSuffix` in `Directory.Build.props`; bump `VersionPrefix`
-for every package. The build writes it into MelonLoader's `MelonInfo`; the mod shows `x.y.z-beta` in the lobby, the
+for every release. The build writes it into MelonLoader's `MelonInfo`; the mod shows `x.y.z-beta` in the lobby, the
 handshake and the log, and "x.y.z Beta" on screen (`ReleaseVersion.ForScreen`). `ProtocolInfo.Version` changes whenever a
 wire layout changes, and a protocol change goes with a new minor version: a peer on another protocol is refused, one on
 another release of the same protocol joins with a notice.
@@ -567,9 +568,12 @@ their defaults (`ModSettings.NonDefaultSummary()`: names and values, never text 
   logged once without naming it): F1 (the panel), F7 (join a friend who is hosting, or host; again to leave), Shift+F7
   (host), Ctrl+F6 (the one-PC test while hosting: a stand-in friend on this PC, played with your controller, or with your
   keyboard when no controller is connected), Ctrl+F5 (a simulated 15 s drop, as a friend), F9 (the network overlay, with
-  `ShowStatusBox` too), F2, F3, F4, F8, F10 (a brawl offer), Ctrl+F10 (the next kind of event on the map), F11, Ctrl+F11
-  (the run-start carrier's self-test), Ctrl+F12 (the lobby's check tour), Ctrl+F9. Keys act only while the game window is
-  focused. While online is off, F1 still opens the panel and F7 puts the notice back on screen.
+  `ShowStatusBox` too), F3 and F4 (record a match, and play the recording back in client mode), F2 (load a
+  recording's match fresh and play the recording onto it), F8 (the controller loopback: your pad drives a virtual pad
+  through the whole remote-input path), Ctrl+F9 and F11 (capture the game's replay snapshots, and play a capture back
+  onto the frozen match), F10 (a brawl offer), Ctrl+F10 (the next kind of event on the map), Ctrl+F11 (the run-start
+  carrier's self-test), Ctrl+F12 (the lobby's check tour). Keys act only while the game window is focused. While
+  online is off, F1 still opens the panel and F7 puts the notice back on screen.
 - **Keyboard players** join at the host's Start like a pad player; Q+E accepts a brawl offer (LB+RB on a pad); their keys
   stop while the game window isn't focused or the panel is open.
 - **Joining from Steam:** Join Game on a hosting friend's name, or accepting their invite, joins as the Join list does, and

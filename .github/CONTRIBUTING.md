@@ -16,14 +16,16 @@ include:
 - whether you were hosting or joining, and how many players were in the session;
 - which mark the problem is at, and a screenshot if it is on screen (not one that shows your Steam friends list).
 
-Please don't attach raw log files (`MelonLoader\Latest.log`, a session log, `Player.log`): they hold folder paths with
-your Windows user name and, from 0.10.0 or earlier, Steam names. If the game won't start, or has no Online tab in its
-Settings (hold Insert for 2 seconds to make the zip there), say so and the maintainers will say what to send.
+Please don't attach raw log files (`MelonLoader\Latest.log`, a session log, `Player.log`): MelonLoader's and Unity's
+logs hold folder paths with your Windows user name, and session logs of 0.10.0 or earlier hold Steam names. Only the
+problem report zip is cleaned. If the game won't start, or has no Online tab in its Settings (hold Insert for 2 seconds
+to make the zip there), say so and the maintainers will say what to send.
 
 ## Fixing a translation
 
 The mod's screens are translated into the game's 15 languages, and the translations haven't been checked by native
-speakers yet. Open an issue with the language, the screen, the text as it reads now and what it should say.
+speakers yet. Open an issue and choose **Translation fix**: it asks for the language, the screen, the text as it reads
+now and what it should say.
 
 ## Suggesting a feature
 

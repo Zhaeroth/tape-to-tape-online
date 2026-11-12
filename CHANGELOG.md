@@ -1,16 +1,16 @@
 # Changelog
 
 All notable changes to T2T Online. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
-versions follow [Semantic Versioning](https://semver.org/) with a `-beta` pre-release tag. The **protocol** is the
-network format: players can play together only on the same protocol, and a protocol change always comes with a new minor
-version.
+versions follow [Semantic Versioning](https://semver.org/), from 0.9.2 on with a `-beta` pre-release tag. The
+**protocol** is the network format: players can play together only on the same protocol, and a protocol change always
+comes with a new minor version.
 
 ## [Unreleased]
 
 ## [0.12.2-beta] - 2026-11-11 (protocol 9)
 
-The first public release: 0.12.0 Beta with its texts and documents made ready for the public (0.12.0 and 0.12.1 were
-not published). Nothing a player does changes, and the protocol is still 9.
+The first public release: 0.12.0 Beta with its texts and documents made ready for the public. Nothing a player does
+changes, and the protocol is still 9.
 
 ### Changed
 - The notice for a player on another release of the same protocol says to install the same release (the host's). It
@@ -82,24 +82,6 @@ release and on 0.11.x can play together, and the game shows a notice that everyo
   game first."); it can be turned off at any time.
 - The developer setting `DevTools` is read when the game starts: a change in `settings.cfg` applies from the next start.
 
-### Security
-- **The check of a host's run file is stricter.** Before a friend's game loads the host's run, it checks that the file
-  holds only what a run save holds. The game's save reader accepts one form of text the check did not expect, which a
-  modified host could have used to get a file past it. The check now refuses that form.
-- **A host's run cannot break a friend's Run History page.** The entry a friend's game saves for a shared run is now
-  checked first: an entry with no team is not saved, a time that is not a date becomes this PC's time, and a match
-  against a team the friend's game does not have is left out. Its texts are cleaned like every other text a host sends.
-  Before, a modified host could send an entry that made the page fail on it in every later launch.
-- **With the host on keyboard and mouse, the host's screens answer only the host.** A friend's controller could move the
-  cursor and confirm on the host's screens (the campaign map, for example) when the host had no gamepad. A host with a
-  gamepad was not affected. (The pause menu and the campaign map's menu follow the game's couch rules for every host:
-  see the README's known limitations.)
-- **The host keeps a connection only for players it seats or is still deciding on.** A refused or removed player's
-  connection is closed, and data that arrives on a channel the host does not read is discarded, so it can no longer
-  pile up in the host's memory.
-- A friend's game plays at most 16 of a host's direct sounds at once and 16 a second (a real match plays far fewer).
-- A typed escape sequence in a Steam name can no longer be drawn as text markup in the game's prompts and toasts.
-
 ### Fixed
 - **In a campaign, a friend had no skater until the host opened the game's Controllers screen** and the friend moved
   onto the team. Now every player in the lobby is on the team when a campaign starts (New Run and Continue), and a
@@ -150,10 +132,33 @@ release and on 0.11.x can play together, and the game shows a notice that everyo
 - The game no longer logs an error each time a prompt in the bottom bar becomes clickable, and the lobby, the campaign
   screens and the stream do less work every frame.
 
+### Security
+- **The check of a host's run file is stricter.** Before a friend's game loads the host's run, it checks that the file
+  holds only what a run save holds. The game's save reader accepts one form of text the check did not expect, which a
+  modified host could have used to get a file past it. The check now refuses that form.
+- **A host's run cannot break a friend's Run History page.** The entry a friend's game saves for a shared run is now
+  checked first: an entry with no team is not saved, a time that is not a date becomes this PC's time, and a match
+  against a team the friend's game does not have is left out. Its texts are cleaned like every other text a host sends.
+  Before, a modified host could send an entry that made the page fail on it in every later launch.
+- **With the host on keyboard and mouse, the host's screens answer only the host.** A friend's controller could move the
+  cursor and confirm on the host's screens (the campaign map, for example) when the host had no gamepad. A host with a
+  gamepad was not affected. (The pause menu and the campaign map's menu follow the game's couch rules for every host:
+  see the README's known limitations.)
+- **The host keeps a connection only for players it seats or is still deciding on.** A refused or removed player's
+  connection is closed, and data that arrives on a channel the host does not read is discarded, so it can no longer
+  pile up in the host's memory.
+- A friend's game plays at most 16 of a host's direct sounds at once and 16 a second (a real match plays far fewer).
+- A typed escape sequence in a Steam name can no longer be drawn as text markup in the game's prompts and toasts.
+
 ## [0.11.2-beta] - 2026-11-06 (protocol 9)
 
 For the game's Nov 6 update. On the new game version, online play needs this release: earlier releases keep online off
 on it, and the game plays normally.
+
+### Changed
+- Follows the new game version's run save, which no longer keeps a logo repository, and bounds the two stats it adds
+  (the most injured skaters on the ice, and the best checking of a golden-helmet forward) in a friend's check of what a
+  host credits.
 
 ### Fixed
 - A friend's shared progress from a host is saved again on the new game version: the game now writes only the stats its
@@ -162,11 +167,6 @@ on it, and the game plays normally.
   log says what each batch wrote.
 - In a host's campaign match, a friend's game no longer adds the friend's own pad player to the home team (the new game
   version does that for a campaign match with no players on the PC; on a friend's PC the host's players play).
-
-### Changed
-- Follows the new game version's run save, which no longer keeps a logo repository, and bounds the two stats it adds
-  (the most injured skaters on the ice, and the best checking of a golden-helmet forward) in a friend's check of what a
-  host credits.
 
 ## [0.11.1-beta] - 2026-11-06 (protocol 9)
 
@@ -256,6 +256,21 @@ by hand: the game names the old files to delete (see Changed).
 
 A new protocol: a friend on 0.9.x can't join a 0.10.0 host, or the other way round. Everyone installs this release.
 
+### Added
+- At a run's end where the host unlocked nothing new, each friend who did now sees their own new-unlocks screen, with
+  their own controller, before heading back to the title.
+- When a friend's game can't load the host's match, it asks them with the game's own prompt whether to try again (it
+  leaves and joins the same game again, with their seat) or leave. A pad alone is enough.
+
+### Changed
+- After each brawl, the host's and each friend's logs say which fight buttons the friend pressed and how each of the
+  AI's punches met their fighter, and a friend's log names the slowest moment of its playback, so a report of a brawl or
+  a stutter shows what happened.
+- The release is now the mod alone, `T2TOnline-<version>.zip`; MelonLoader 0.7.3 is installed from its official release.
+  The zip includes the license and third-party notices.
+- The author field MelonLoader shows for the mod now names the project's creator.
+- Release builds no longer embed the build machine's folder paths in the assemblies or debug symbols.
+
 ### Fixed
 - On the campaign map, a friend now sees the match preview pop up when the host picks a boss, elite or challenge team,
   as the host does.
@@ -291,22 +306,6 @@ A new protocol: a friend on 0.9.x can't join a 0.10.0 host, or the other way rou
   shows if the run ends meanwhile.
 - A friend who leaves no longer shows as "Joining" in the host's lobby for a moment afterwards.
 
-### Added
-- At a run's end where the host unlocked nothing new, each friend who did now sees their own new-unlocks screen, with
-  their own controller, before heading back to the title.
-- When a friend's game can't load the host's match, it asks them with the game's own prompt whether to try again (it
-  leaves and joins the same game again, with their seat) or leave. A pad alone is enough.
-
-### Changed
-- After each brawl, the host's and each friend's logs say which fight buttons the friend pressed and how each of the
-  AI's punches met their fighter, and a friend's log names the slowest moment of its playback, so a report of a brawl or
-  a stutter shows what happened.
-- The release is now the mod alone, `T2TOnline-<version>.zip`; MelonLoader 0.7.3 is installed from its official release.
-  The zip includes the license and third-party notices.
-- The author field MelonLoader shows for the mod now names the project's creator.
-- Release builds no longer embed the build machine's folder paths in the assemblies or debug symbols.
-- Example names in the mod's text and logs are neutral.
-
 ## [0.9.3-beta] - 2026-11-02 (protocol 7)
 
 ### Fixed
@@ -318,31 +317,31 @@ A new protocol: a friend on 0.9.x can't join a 0.10.0 host, or the other way rou
 
 For the game's update of November 1, 2026 (Steam build 26372689).
 
+### Changed
+- Releases are named "0.9.x Beta".
+
 ### Fixed
 - Any game update stopped the game from starting while the mod was installed. The mod now clears MelonLoader's outdated
   files before MelonLoader rebuilds them, so the first launch after an update works (it takes a few minutes).
 - On a friend's screen, the ball in a ball-and-chain match froze after the first stoppage, and the chain was never drawn.
 - The release check now refuses to package a build the installed game version hasn't been tested with.
 
-### Changed
-- Releases are named "0.9.x Beta".
-
 ## [0.9.1] - 2026-11-01 (protocol 7)
 
 Security and reliability fixes across the mod.
+
+### Fixed
+- Join Lobby listed no lobby: a friend's hosted lobby never appeared in it.
+- Backups also keep the first backup of each of the last 7 days, so a night of games no longer pushes out older backups.
+- A friend who returns after the host went home keeps what they were credited.
+- The invite notice now appears. Also fixed: an unplugged controller in the lobby, a late joiner's scoreboard, a false
+  trigger warning, the Nurse event's cards in either order, panels flashing on friends after each game, the host's
+  settings notice in each friend's language, and other small problems.
 
 ### Security
 - A modified host could make a friend's game load data types it should never load. The run file check now accepts only
   what the game's own save writer produces.
 - Message flood limits, size caps on every network message, and a host's stream held neutral in the lobby.
-
-### Fixed
-- Join Lobby never listed a real friend's lobby.
-- Backups also keep the first backup of each of the last 7 days, so a night of games no longer pushes out older backups.
-- A friend who returns after the host went home keeps what they were credited.
-- The invite notice never appeared; an unplugged controller in the lobby; a late joiner's scoreboard; a false trigger
-  warning; the Nurse event's cards in either order; panels flashing on friends after each game; the host's settings notice
-  in each friend's language; and other small fixes.
 
 ## [0.9.0] - 2026-11-01 (protocol 7)
 

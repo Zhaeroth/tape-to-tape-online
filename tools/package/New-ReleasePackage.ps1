@@ -3,9 +3,8 @@
     Builds a release's two zips: the public download, and the same with the official MelonLoader 0.7.3 release.
 
 .DESCRIPTION
-    Runs the release gate first (tools\gate\Invoke-Gate.ps1 -Release: a committed tree clean of forbidden text, the
-    plugin build, both test projects, hookcheck, rowcheck, uipartscheck, lobbywords_check, the package checks and the
-    tested game build), then builds the plugin from scratch against the game into a fresh folder (so nothing stale can
+    Runs the release gate first (every step of tools\gate\Invoke-Gate.ps1 -Release, on a committed tree clean of
+    forbidden text), then builds the plugin from scratch against the game into a fresh folder (so nothing stale can
     ship), checks the build holds the mod's game code, carries no machine paths, has the version in Directory.Build.props
     and passes tools\checks\zipcheck.py built (versions, references, PDB structure), and writes to -OutDir:
       T2TOnline-<version>.zip                     the public download, in the one-folder layout (D124):

@@ -29,13 +29,9 @@ Directory.Build.local.props
 *.local.props
 .env
 
-# Assistant and editor tooling, and personal notes
+# Editor and assistant tool files
 .claude/
 CLAUDE*.md
-
-# Private working folders: reverse-engineering notes and extra git worktrees
-research
-worktrees/
 
 # Packages built by tools/package (include MelonLoader binaries)
 dist/
