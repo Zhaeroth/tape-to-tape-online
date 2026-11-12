@@ -12,6 +12,7 @@ The game's 4-player couch co-op over Steam, in Quick Game and the full campaign,
 [![How to play](https://img.shields.io/badge/Guide-How%20to%20play-43c486?style=for-the-badge&labelColor=0d1930)](#playing-together)
 
 [![Latest release](https://img.shields.io/github/v/release/Zhaeroth/tape-to-tape-online?style=flat-square&label=release&color=f2b84b)](https://github.com/Zhaeroth/tape-to-tape-online/releases/latest)
+[![Also on Nexus Mods](https://img.shields.io/badge/also%20on-Nexus%20Mods-d98f40?style=flat-square)](https://www.nexusmods.com/tapetotape/mods/23)
 [![Status: beta](https://img.shields.io/badge/status-beta-f2b84b?style=flat-square)](#roadmap)
 [![Game: Tape to Tape](https://img.shields.io/badge/game-Tape%20to%20Tape-1b2838?style=flat-square&logo=steam&logoColor=white)](https://store.steampowered.com/app/1566200/Tape_to_Tape/)
 [![Loader: MelonLoader 0.7.3](https://img.shields.io/badge/loader-MelonLoader%200.7.3-5b8fe0?style=flat-square)](https://github.com/LavaGang/MelonLoader/releases/tag/v0.7.3)
@@ -130,7 +131,8 @@ Setup takes a few minutes, and each player does it once. The full steps are just
 ## Install
 
 This guide is for the [latest release](https://github.com/Zhaeroth/tape-to-tape-online/releases/latest). The zip also
-holds `T2T Online - READ ME FIRST.txt`, a plain-text copy of the install, play and uninstall steps.
+holds `T2T Online - READ ME FIRST.txt`, a plain-text copy of the install, play and uninstall steps. The mod is also on
+[Nexus Mods](https://www.nexusmods.com/tapetotape/mods/23), where the main file is the same zip, byte for byte.
 
 ### Requirements
 
@@ -437,9 +439,10 @@ session logs of 0.10.0 and earlier are deleted once, because they hold Steam nam
 
 Tape to Tape updates from time to time, and each game update switches online play off until a T2T Online release made
 for it is out (the game itself plays normally meanwhile). To hear about releases, open this repository on GitHub, choose
-**Watch** > **Custom** and tick **Releases**. The
+**Watch** > **Custom** and tick **Releases**, or track the mod on its
+[Nexus Mods page](https://www.nexusmods.com/tapetotape/mods/23). The
 [Releases page](https://github.com/Zhaeroth/tape-to-tape-online/releases) lists every release with its notes and the
-digest of its zip. T2T Online does not check for updates itself: it never contacts GitHub.
+digest of its zip. T2T Online does not check for updates itself: it never contacts GitHub or Nexus Mods.
 
 ### Uninstalling
 
